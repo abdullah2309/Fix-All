@@ -1,49 +1,198 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Fix_All</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Fix_All.styles.css" asp-append-version="true" />
+    <meta charset="utf-8">
+    <title>Fix All – ViewData["Title"] .</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="plumbing, emergency repair, home services, 24/7" name="keywords">
+    <meta content="Burst pipes, dead sockets, jammed doors—whatever breaks, Fix All puts it back together before your coffee gets cold. Book in 30 seconds, get pros on-site today." name="description">
+
+    <!-- Favicon -->
+    <link href="~/assets/img/logo-removebg-preview.png" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto:wght@500;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/assets/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="~/assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Fix_All</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <!-- Spinner Start -->
+    <div id="spinner"
+         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <style>
+        /* Ensure navbar overlays carousel and is transparent */
+        .navbar {
+            background-color: transparent !important;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1050;
+        }
+
+        .header-carousel {
+            margin-top: 0;
+        }
+
+        .navbar.scrolled {
+            background-color: white !important;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section h5 {
+            font-size: 14px;
+        }
+
+        .hero-section h1 {
+            font-size: 32px;
+        }
+
+        .hero-section p {
+            font-size: 13px;
+        }
+    </style>
+
+    <!-- Navbar Start -->
+    <div class="container-fluid nav-bar z-100 position-relative hore">
+        <nav class="navbar navbar-expand-lg navbar-light p-3 py-lg-0 px-lg-4" style="margin-right: 300px;">
+            <!-- LOGO on the left -->
+            <a href="index.html" class="navbar-brand d-flex m-0 p-0">
+                <img src="~/assets/img/logo-removebg-preview.png" alt="Fix All Logo" style="height: 70px; width: 100px;">
+            </a>
+
+            <!-- Toggler for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <!-- Centered navigation -->
+                <div class="navbar-nav me-auto mx-auto text-center">
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="service.html" class="nav-item nav-link">Services</a>
+
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+
+                <!-- LOGIN / SIGN IN on the right -->
+                <div class="d-flex">
+                    <a href="login.html" class="btn btn-outline-primary me-2">Sign In</a>
+                    <a href="signin.html" class="btn btn-primary">Join Free</a>
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
     </div>
+    <!-- Navbar End -->
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Fix_All - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+
+            @RenderBody()
+    
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Address</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Fix-It Street, New York, NY</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 6789</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>hello@fixall.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Opening Hours</h4>
+                    <h6 class="text-light">Monday - Friday:</h6>
+                    <p class="mb-4">07.00 AM – 09.00 PM</p>
+                    <h6 class="text-light">Saturday - Sunday:</h6>
+                    <p class="mb-0">08.00 AM – 06.00 PM</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Services</h4>
+                    <a class="btn btn-link" href="">Drain Cleaning</a>
+                    <a class="btn btn-link" href="">Sewer Lines</a>
+                    <a class="btn btn-link" href="">Water Heaters</a>
+                    <a class="btn btn-link" href="">Toilet Repairs</a>
+                    <a class="btn btn-link" href="">Broken Pipes</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Newsletter</h4>
+                    <p>Get 10 % off your first fix—drop your email, we’ll do the rest.</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                        <button type="button"
+                                class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">
+                            Sign Up
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">Fix All</a>, All Right Reserved.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By
+                        <a href="https://themewagon.com">ThemeWagon</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-0 back-to-top" title="Rocket back up ↑"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/lib/wow/wow.min.js"></script>
+    <script src="~/assets/lib/easing/easing.min.js"></script>
+    <script src="~/assets/lib/waypoints/waypoints.min.js"></script>
+    <script src="~/assets/lib/counterup/counterup.min.js"></script>
+    <script src="~/assets/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/assets/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="~/assets/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="~/assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/assets/js/main.js"></script>
 </body>
+
 </html>
