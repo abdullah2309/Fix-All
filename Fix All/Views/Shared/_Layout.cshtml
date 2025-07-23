@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Fix All – ViewData["Title"] .</title>
+    <title>Fix All – @ViewData["Title"].</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="plumbing, emergency repair, home services, 24/7" name="keywords">
     <meta content="Burst pipes, dead sockets, jammed doors—whatever breaks, Fix All puts it back together before your coffee gets cold. Book in 30 seconds, get pros on-site today." name="description">
@@ -83,8 +83,8 @@
     <div class="container-fluid nav-bar z-100 position-relative hore">
         <nav class="navbar navbar-expand-lg navbar-light p-3 py-lg-0 px-lg-4" style="margin-right: 300px;">
             <!-- LOGO on the left -->
-            <a href="index.html" class="navbar-brand d-flex m-0 p-0">
-                <img src="~/assets/img/logo-removebg-preview.png" alt="Fix All Logo" style="height: 70px; width: 100px;">
+            <a asp-action="Index" asp-controller="Home" class="navbar-brand d-flex m-0 p-0">
+                <img src="~/assets/img/logo-removebg-preview.png"  alt="Fix All Logo" style="height: 70px; width: 100px;">
             </a>
 
             <!-- Toggler for mobile -->
@@ -95,11 +95,11 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <!-- Centered navigation -->
                 <div class="navbar-nav me-auto mx-auto text-center">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="service.html" class="nav-item nav-link">Services</a>
+                    <a asp-action="Index" asp-controller="Home" class="nav-item nav-link active">Home</a>
+                    <a asp-action="About" asp-controller="Home" class="nav-item nav-link">About</a>
+                    <a asp-action="Index" asp-controller="Home" class="nav-item nav-link">Services</a>
 
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a asp-action="Index" asp-controller="Home" class="nav-item nav-link">Contact</a>
                 </div>
 
                 <!-- LOGIN / SIGN IN on the right -->
