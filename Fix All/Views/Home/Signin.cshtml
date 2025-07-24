@@ -1,63 +1,74 @@
 ﻿@{
-    ViewData["Title"] = "Sign in | Sign up ";
+    Layout = null;
+    ViewData["Title"] = "Sign in | Sign up";
 }
-<br />
-<br />
-<br />
-<div class="container">
-    <!-- Sign In Form -->
-    <div class="form-section" id="signin-form">
-        <h2>Sign In</h2>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <div class="forgot">Forgot your password?</div>
-        <button type="button">SIGN IN</button>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link href="~/assets/css/sigin.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sign In Form -->
+        <div class="form-section" id="signin-form">
+            <h2>Sign In</h2>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <div class="forgot">Forgot your password?</div>
+            <button type="button">SIGN IN</button>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div class="form-section" id="signup-form">
+            <h2>Sign up</h2>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <input type="text" placeholder="Address" required>
+            <input type="tel" placeholder="Contact Number" required>
+
+            <button type="button">Sign up</button>
+        </div>
+
+        <!-- Side Panel -->
+        <div class="side-panel">
+            <h2 id="panel-title">Hello, Friend!</h2>
+            <p id="panel-text">Register with your personal details to use all of site features</p>
+            <button onclick="toggleForm()">SIGN UP</button>
+        </div>
     </div>
 
-    <!-- Sign Up Form -->
-    <div class="form-section" id="signup-form">
-        <h2>Sign up</h2>
-        <input type="text" placeholder="Full Name" required>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <input type="text" placeholder="Address" required>
-        <input type="tel" placeholder="Contact Number" required>
+    <script>
+        let isSignUp = false;
 
-        <button type="button">REGISTER</button>
-    </div>
+        function toggleForm() {
+            const signInForm = document.getElementById("signin-form");
+            const signUpForm = document.getElementById("signup-form");
+            const panelTitle = document.getElementById("panel-title");
+            const panelText = document.getElementById("panel-text");
+            const panelButton = document.querySelector(".side-panel button");
 
-    <!-- Side Panel -->
-    <div class="side-panel">
-        <h2 id="panel-title">Hello, Friend!</h2>
-        <p id="panel-text">Register with your personal details to use all of site features</p>
-        <button onclick="toggleForm()">SIGN UP</button>
-    </div>
-</div>
+            isSignUp = !isSignUp;
 
-<script>
-    let isSignUp = false;
-
-    function toggleForm() {
-        const signInForm = document.getElementById("signin-form");
-        const signUpForm = document.getElementById("signup-form");
-        const panelTitle = document.getElementById("panel-title");
-        const panelText = document.getElementById("panel-text");
-        const panelButton = document.querySelector(".side-panel button");
-
-        isSignUp = !isSignUp;
-
-        if (isSignUp) {
-            signInForm.style.display = "none";
-            signUpForm.style.display = "flex";
-            panelTitle.innerText = "Welcome Back!";
-            panelText.innerText = "To keep connected, please login with your personal info";
-            panelButton.innerText = "SIGN IN";
-        } else {
-            signInForm.style.display = "flex";
-            signUpForm.style.display = "none";
-            panelTitle.innerText = "Hello, Friend!";
-            panelText.innerText = "Register with your personal details to use all of site features";
-            panelButton.innerText = "SIGN UP";
+            if (isSignUp) {
+                signInForm.style.display = "none";
+                signUpForm.style.display = "flex";
+                panelTitle.innerText = "Welcome Back!";
+                panelText.innerText = "To keep connected, please login with your personal info";
+                panelButton.innerText = "SIGN IN";
+            } else {
+                signInForm.style.display = "flex";
+                signUpForm.style.display = "none";
+                panelTitle.innerText = "Hello, Friend!";
+                panelText.innerText = "Register with your personal details to use all of site features";
+                panelButton.innerText = "SIGN UP";
+            }
         }
-    }
-</script>
+    </script>
+
+</body>
+</html>
