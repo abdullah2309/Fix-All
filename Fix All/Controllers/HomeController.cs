@@ -30,6 +30,10 @@ namespace Fix_All.Controllers
         {
             return View();
         }
+        public IActionResult Signin()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
