@@ -1,7 +1,11 @@
+using Fix_All.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<mydbcontext>(a=>a.UseSqlServer("Server=DESKTOP-KHBGNKV\\SQLEXPRESS;Database=Fix_All; Trusted_Connection=True; TrustSeverCertificate=True"));
 
 var app = builder.Build();
 
