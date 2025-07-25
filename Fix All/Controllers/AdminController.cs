@@ -8,6 +8,10 @@ namespace Fix_All.Controllers
         {
             return View();
         }
+        public IActionResult Add_Labor_Category()
+        {
+            return View();
+        }
         public IActionResult Table()
         {
             return View();

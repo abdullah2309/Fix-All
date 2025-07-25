@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EcommerceShop.Models
+namespace Fix_All.Models
 {
     public class Add_labor_Category
     {

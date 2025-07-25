@@ -1,4 +1,4 @@
-﻿using EcommerceShop.Models;
+﻿using Fix_All.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fix_All.Models

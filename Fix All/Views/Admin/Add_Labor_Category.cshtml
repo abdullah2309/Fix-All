@@ -1,0 +1,40 @@
+﻿
+ @model Fix_All.Models.Add_labor_Category
+@{
+    ViewData["AdminTitle"] = "Add_Labor_Category";
+    Layout = "_Admin_layout";
+}
+
+<main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200">
+<!-- Button to Open Modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLaborCategoryModal">
+    Add Labor Category
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addLaborCategoryModal" tabindex="-1" aria-labelledby="addLaborCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-action="Create" asp-controller="LaborCategory">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addLaborCategoryModalLabel">Add Labor Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label asp-for="category_name" class="form-label"></label>
+                        <input asp-for="category_name" class="form-control" />
+                        <span asp-validation-for="category_name" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</main>
