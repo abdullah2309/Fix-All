@@ -1,0 +1,151 @@
+﻿
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #f0f2f5;
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    min-height: 500px;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.form-section {
+    flex: 1;
+    padding: 60px 40px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    .form-section.active {
+        display: flex;
+    }
+
+    .form-section h2 {
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 40px;
+    }
+
+    .form-section input, .form-section select {
+        width: 100%;
+        padding: 12px 15px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        outline: none;
+    }
+
+    .form-section button {
+        padding: 12px;
+        background: #202894;
+        color: #fff;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        margin-top: 10px;
+        font-weight: bold;
+        transition: background 0.3s;
+        width: 100%;
+    }
+
+        .form-section button:hover {
+            background: #0b0c66;
+        }
+
+.forgot {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+}
+
+.side-panel {
+    flex: 1;
+    background: linear-gradient(to top right, #6a11cb, #2575fc);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+    border-radius: 120px 30px 30px 120px;
+}
+
+    .side-panel p {
+        margin: 20px 0;
+        max-width: 250px;
+    }
+
+    .side-panel button {
+        padding: 12px 30px;
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s, color 0.3s;
+    }
+
+        .side-panel button:hover {
+            background: white;
+            color: #2575fc;
+        }
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        border-radius: 20px;
+    }
+
+    .side-panel {
+        border-radius: 0 0 20px 20px;
+        padding: 30px 20px;
+    }
+
+    .form-section {
+        padding: 30px 20px;
+    }
+
+        .form-section h2 {
+            font-size: 32px;
+        }
+
+    .side-panel p {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-section h2 {
+        font-size: 28px;
+    }
+
+    .form-section button,
+    .side-panel button {
+        width: 100%;
+        padding: 10px 0;
+    }
+}
+
+

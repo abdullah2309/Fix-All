@@ -28,9 +28,13 @@ namespace Fix_All.Controllers
         }
         public IActionResult Contact()
         {
-            return View();
+            return View(); 
         }
         public IActionResult Signin()
+        {
+            return View();
+        }
+        public IActionResult LaborSignin()
         {
             return View();
         }
