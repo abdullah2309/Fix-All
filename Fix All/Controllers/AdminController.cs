@@ -18,6 +18,7 @@ namespace Fix_All.Controllers
         }
         public IActionResult Add_Labor_Category()
         {
+            ViewData["Show_Add_Labor_Category"] = mydbcontext.add_Labor_Categories;
             return View();
         }
         [HttpPost]
@@ -30,6 +31,11 @@ namespace Fix_All.Controllers
                 return RedirectToAction("Add_Labor_Category");
             }
             return RedirectToAction(nameof(Add_Labor_Category));
+        }
+        public IActionResult _show_Add_Labor_Category()
+        {
+            var categories = mydbcontext.add_Labor_Categories.ToList();
+            return View(categories);
         }
 
         public IActionResult Table()
