@@ -1,0 +1,83 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Labor Sign in | Sign up";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link href="~/assets/css/laborsigin.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <!-- Sign In Form -->
+        <div class="form-section active" id="signin-form">
+            <h2>Labor Login</h2>
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
+            <div class="forgot">Forgot your password?</div>
+            <button type="button">LOGIN</button>
+        </div>
+
+        <!-- Sign Up Form -->
+        <div class="form-section" id="signup-form">
+            <h2>Labor Register</h2>
+            <input type="text" placeholder="Full Name" required />
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
+            <input type="text" placeholder="Trade / Skill (e.g. Electrician, Plumber)" required />
+            <input type="number" placeholder="Years of Experience" required />
+            <input type="text" placeholder="Address" required />
+            <input type="tel" placeholder="Contact Number" required />
+            <select required>
+                <option value="">Availability</option>
+                <option value="Full-Time">Full-Time</option>
+                <option value="Part-Time">Part-Time</option>
+                <option value="Freelance">Freelance</option>
+            </select>
+            <button type="button">REGISTER</button>
+        </div>
+
+        <!-- Side Panel -->
+        <div class="side-panel">
+            <h2 id="panel-title">New Here?</h2>
+            <p id="panel-text">Register as a laborer with your skills and experience to get hired easily!</p>
+            <button onclick="toggleForm()">REGISTER</button>
+            <br>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-primary text-white" style="color: white;">Back to Home</a>
+
+        </div>
+    </div>
+
+    <script>
+        let isSignUp = false;
+
+        function toggleForm() {
+          const signInForm = document.getElementById("signin-form");
+          const signUpForm = document.getElementById("signup-form");
+          const panelTitle = document.getElementById("panel-title");
+          const panelText = document.getElementById("panel-text");
+          const panelButton = document.querySelector(".side-panel button");
+
+          isSignUp = !isSignUp;
+
+          if (isSignUp) {
+            signInForm.classList.remove('active');
+            signUpForm.classList.add('active');
+            panelTitle.innerText = "Already Registered?";
+            panelText.innerText = "Login with your registered email and password.";
+            panelButton.innerText = "LOGIN";
+          } else {
+            signInForm.classList.add('active');
+            signUpForm.classList.remove('active');
+            panelTitle.innerText = "New Here?";
+            panelText.innerText = "Register as a laborer with your skills and experience to get hired easily!";
+            panelButton.innerText = "REGISTER";
+          }
+        }
+    </script>
+</body>
+</html>
+
