@@ -6,7 +6,7 @@ namespace Fix_All.Controllers
     {
         public IActionResult Index()
         {
-            return View();a
+            return View();
         }
     }
 }
