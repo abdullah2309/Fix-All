@@ -8,7 +8,7 @@ namespace Fix_All.Models
         public mydbcontext(DbContextOptions options ) :base(options)
         {
         }
-        public DbSet<Add_labor_Category> add_Labor_Categories { get; set;}
+       // public DbSet<Add_labor_Category> add_Labor_Categories { get; set;}
 
     }
 }
