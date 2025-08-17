@@ -1,83 +1,495 @@
-﻿@{
+﻿@model ServiceProvider
+@{
     Layout = null;
     ViewData["Title"] = "Labor Sign in | Sign up";
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>@ViewData["Title"]</title>
-    <link href="~/assets/css/laborsigin.css" rel="stylesheet" />
-</head>
-<body>
-    <div class="container">
-        <!-- Sign In Form -->
-        <div class="form-section active" id="signin-form">
-            <h2>Labor Login</h2>
-            <input type="email" placeholder="Email" required />
-            <input type="password" placeholder="Password" required />
-            <div class="forgot">Forgot your password?</div>
-            <button type="button">LOGIN</button>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+<style>
+    :root { 
+      --primary: #2563eb; 
+      --primary-dark: #1d4ed8;
+      --secondary: #f97316; 
+      --secondary-dark: #ea580c;
+      --bg: #f8fafc; 
+      --card: #ffffff; 
+      --text: #1e293b; 
+      --text-light: #64748b; 
+      --border: #e2e8f0;
+      --success: #059669;
+      --error: #dc2626;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    * { box-sizing: border-box; }
+    
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    
+    .header {
+      background: var(--card);
+      padding: 1rem 0;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .logo::before {
+      content: "🔧";
+      font-size: 2rem;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+    }
+    
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    
+    .hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .hero h1 {
+      margin: 0 0 0.5rem;
+      font-size: 2.25rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero p {
+      color: var(--text-light);
+      font-size: 1.125rem;
+      margin: 0;
+    }
+    
+    .steps {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0;
+      background: #f1f5f9;
+      padding: 1rem;
+      border-radius: 12px;
+    }
+    
+    .step {
+      flex: 1;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      color: var(--text-light);
+      font-weight: 600;
+      background: var(--card);
+      border: 2px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    
+    .step.active {
+      color: var(--card);
+      background: var(--primary);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    
+    .form-section {
+      margin-bottom: 2rem;
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    
+    @@media(min-width: 768px) { 
+      .grid.cols-2 { grid-template-columns: 1fr 1fr; } 
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      outline: none;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    .input-group {
+      display: flex;
+      gap: 0.75rem;
+      align-items: stretch;
+    }
+    
+    .input-group input {
+      flex: 1;
+    }
+    
+    .btn {
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+    
+    .btn-secondary {
+      background: var(--card);
+      color: var(--text);
+      border: 2px solid var(--border);
+    }
+    
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+    
+    .btn-orange {
+      background: var(--secondary);
+      color: white;
+    }
+    
+    .btn-orange:hover {
+      background: var(--secondary-dark);
+    }
+    
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+    
+    .help-text {
+      color: var(--text-light);
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    
+    .status-pill {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    
+    .status-pill.success {
+      background: #dcfce7;
+      color: var(--success);
+      border-color: #bbf7d0;
+    }
+    
+    .otp-inputs {
+      display: flex;
+      gap: 0.75rem;
+      align-items: stretch;
+    }
+    
+    .otp-inputs input {
+      flex: 1;
+    }
+    
+    .hidden { display: none !important; }
+    
+    .error {
+      color: var(--error);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    .success-msg {
+      color: var(--success);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    .footer-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    
+    .file-preview {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 0.5rem;
+    }
+    
+    .file-preview img {
+      max-width: 150px;
+      border-radius: 8px;
+      display: block;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+    
+    .submission-result {
+      background: #f0f9ff;
+      border: 1px solid #0ea5e9;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .submission-result h3 {
+      margin: 0 0 1rem;
+      color: var(--primary);
+    }
+    
+    .dev-hint {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: #92400e;
+    }
+  </style>
+  
+  <body>
+
+<div class="container">
+    <div class="card">
+        <div class="hero">
+            <h1>Join Our Service Network</h1>
+            <p>Become a trusted Fix All service provider and grow your business</p>
         </div>
 
-        <!-- Sign Up Form -->
-        <div class="form-section" id="signup-form">
-            <h2>Labor Register</h2>
-            <input type="text" placeholder="Full Name" required />
-            <input type="email" placeholder="Email" required />
-            <input type="password" placeholder="Password" required />
-            <input type="text" placeholder="Trade / Skill (e.g. Electrician, Plumber)" required />
-            <input type="number" placeholder="Years of Experience" required />
-            <input type="text" placeholder="Address" required />
-            <input type="tel" placeholder="Contact Number" required />
-            <select required>
-                <option value="">Availability</option>
-                <option value="Full-Time">Full-Time</option>
-                <option value="Part-Time">Part-Time</option>
-                <option value="Freelance">Freelance</option>
-            </select>
-            <button type="button">REGISTER</button>
-        </div>
+        <form asp-action="Register" method="post" enctype="multipart/form-data">
+            <!-- Basic Information -->
+            <div class="form-section">
+                <h3 class="section-title">👋 Basic Information</h3>
+                <div class="grid cols-2">
+                    <div class="form-group">
+                        <label asp-for="FirstName"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
 
-        <!-- Side Panel -->
-        <div class="side-panel">
-            <h2 id="panel-title">New Here?</h2>
-            <p id="panel-text">Register as a laborer with your skills and experience to get hired easily!</p>
-            <button onclick="toggleForm()">REGISTER</button>
-            <br>
-            <a asp-action="Index" asp-controller="Home" class="btn btn-primary text-white" style="color: white;">Back to Home</a>
+                <div class="grid cols-2">
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" type="email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
 
-        </div>
+                <div class="form-group">
+                    <label asp-for="PasswordHash">Password</label>
+                    <input asp-for="PasswordHash" type="password" class="form-control" />
+                    <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Identity Info -->
+            <div class="form-section">
+                <h3 class="section-title">🆔 Identity Information</h3>
+                <div class="form-group">
+                    <label asp-for="CNIC"></label>
+                    <input asp-for="CNIC" class="form-control" />
+                    <span asp-validation-for="CNIC" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Address"></label>
+                    <textarea asp-for="Address" class="form-control"></textarea>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Education & Skills -->
+            <div class="form-section">
+                <h3 class="section-title">🎓 Education & Skills</h3>
+                <div class="grid cols-2">
+                    <div class="form-group">
+                        <label asp-for="Education"></label>
+                        <select asp-for="Education" class="form-control">
+                            <option value="">Select your education</option>
+                            <option>Matric</option>
+                            <option>Intermediate</option>
+                            <option>Diploma</option>
+                            <option>Bachelor's Degree</option>
+                            <option>Master's Degree</option>
+                            <option>Technical Certificate</option>
+                            <option>Other</option>
+                        </select>
+                        <span asp-validation-for="Education" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FieldId">Service Category</label>
+                        <select asp-for="FieldId" asp-items="ViewBag.Fields" class="form-control">
+                            <option value="">Choose your specialty</option>
+                        </select>
+                        <span asp-validation-for="FieldId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input asp-for="IsDiploma" type="checkbox" />
+                    <label asp-for="IsDiploma"></label>
+                </div>
+            </div>
+
+            <!-- Documents -->
+            <div class="form-section">
+                <h3 class="section-title">📄 Documents</h3>
+                <div class="grid cols-2">
+                    <div class="form-group">
+                        <label for="CVFilePath">CV/Resume</label>
+                        <input type="file" name="CVFile" accept=".pdf,.doc,.docx" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="ProfileImagePath">Profile Photo</label>
+                        <input type="file" name="ProfileImage" accept="image/*" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-actions">
+                <button type="submit" class="btn btn-success">🚀 Submit Application</button>
+            </div>
+        </form>
     </div>
+</div>
 
-    <script>
-        let isSignUp = false;
-
-        function toggleForm() {
-          const signInForm = document.getElementById("signin-form");
-          const signUpForm = document.getElementById("signup-form");
-          const panelTitle = document.getElementById("panel-title");
-          const panelText = document.getElementById("panel-text");
-          const panelButton = document.querySelector(".side-panel button");
-
-          isSignUp = !isSignUp;
-
-          if (isSignUp) {
-            signInForm.classList.remove('active');
-            signUpForm.classList.add('active');
-            panelTitle.innerText = "Already Registered?";
-            panelText.innerText = "Login with your registered email and password.";
-            panelButton.innerText = "LOGIN";
-          } else {
-            signInForm.classList.add('active');
-            signUpForm.classList.remove('active');
-            panelTitle.innerText = "New Here?";
-            panelText.innerText = "Register as a laborer with your skills and experience to get hired easily!";
-            panelButton.innerText = "REGISTER";
-          }
-        }
-    </script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 </body>
 </html>
-
