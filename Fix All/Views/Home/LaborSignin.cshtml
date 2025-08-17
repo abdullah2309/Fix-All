@@ -1,83 +1,276 @@
-﻿@{
+﻿@model Fix_All.Models.ServiceProvider
+
+@{
     Layout = null;
-    ViewData["Title"] = "Labor Sign in | Sign up";
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>@ViewData["Title"]</title>
-    <link href="~/assets/css/laborsigin.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <title>Join Our Service Network</title>
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .form-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        max-width: 600px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+    .header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        position: relative;
+    }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #333;
+        font-size: 14px;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background: white;
+    }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    /* ✅ Validation error styling */
+    .text-danger {
+        color: red !important;
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: 4px;
+        display: block;
+    }
+
+    .continue-button {
+        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+
+        .continue-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+    @@media (max-width: 640px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .form-container {
+            padding: 30px 20px;
+        }
+    }
+</style>
 <body>
-    <div class="container">
-        <!-- Sign In Form -->
-        <div class="form-section active" id="signin-form">
-            <h2>Labor Login</h2>
-            <input type="email" placeholder="Email" required />
-            <input type="password" placeholder="Password" required />
-            <div class="forgot">Forgot your password?</div>
-            <button type="button">LOGIN</button>
+    <div class="form-container">
+        <div class="header">
+            <h1>Join Our Service Network</h1>
+            <p>Become a trusted Fix Alliance provider and grow your business</p>
         </div>
 
-        <!-- Sign Up Form -->
-        <div class="form-section" id="signup-form">
-            <h2>Labor Register</h2>
-            <input type="text" placeholder="Full Name" required />
-            <input type="email" placeholder="Email" required />
-            <input type="password" placeholder="Password" required />
-            <input type="text" placeholder="Trade / Skill (e.g. Electrician, Plumber)" required />
-            <input type="number" placeholder="Years of Experience" required />
-            <input type="text" placeholder="Address" required />
-            <input type="tel" placeholder="Contact Number" required />
-            <select required>
-                <option value="">Availability</option>
-                <option value="Full-Time">Full-Time</option>
-                <option value="Part-Time">Part-Time</option>
-                <option value="Freelance">Freelance</option>
-            </select>
-            <button type="button">REGISTER</button>
-        </div>
+        <form asp-action="LaborSignin" asp-controller="Home" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
 
-        <!-- Side Panel -->
-        <div class="side-panel">
-            <h2 id="panel-title">New Here?</h2>
-            <p id="panel-text">Register as a laborer with your skills and experience to get hired easily!</p>
-            <button onclick="toggleForm()">REGISTER</button>
-            <br>
-            <a asp-action="Index" asp-controller="Home" class="btn btn-primary text-white" style="color: white;">Back to Home</a>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-        </div>
+            <!-- Basic Information -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" placeholder="e.g. Ali" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" placeholder="e.g. Khan" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" placeholder="you@gmail.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phone"></label>
+                    <input asp-for="Phone" class="form-control" placeholder="03001234567" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CNIC"></label>
+                <input asp-for="CNIC" class="form-control" placeholder="12345-6789012-3" />
+                <span asp-validation-for="CNIC" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <textarea asp-for="Address" class="form-control" placeholder="Enter your complete address"></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <!-- Education & Skills -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Education"></label>
+                    <select asp-for="Education" class="form-control">
+                        <option value="">Select Education Level</option>
+                        <option value="matric">Matriculation</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="bachelor">Bachelor's Degree</option>
+                        <option value="master">Master's Degree</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <span asp-validation-for="Education" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FieldId">Service Field</label>
+                    <select asp-for="FieldId" asp-items="ViewBag.Fields" class="form-control">
+                        <option value="">Select Your Field</option>
+                    </select>
+                    <span asp-validation-for="FieldId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="addmorefield"></label>
+                <input asp-for="addmorefield" type="text" class="form-control" placeholder="Enter additional field info" />
+                <span asp-validation-for="addmorefield" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <label asp-for="Experience">Experience</label>
+                <input asp-for="Experience" type="text" class="form-control" placeholder="e.g. 5" />
+                <span asp-validation-for="Experience" class="text-danger"></span>
+            </div>
+
+
+
+            <!-- File Upload -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Upload CV/Resume</label>
+                    <input type="file" name="cv" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Profile Picture</label>
+                    <input type="file" name="profileImage" class="form-control" />
+                </div>
+            </div>
+
+            <!-- Password -->
+           
+                <div class="form-group">
+                    <label>Password</label>
+                    <input asp-for="PasswordHash" type="password" class="form-control" placeholder="Enter a strong password" />
+                    <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                </div>
+                
+
+
+
+           
+
+            <button type="submit" class="continue-button">🚀 Submit Application</button>
+        </form>
     </div>
 
-    <script>
-        let isSignUp = false;
-
-        function toggleForm() {
-          const signInForm = document.getElementById("signin-form");
-          const signUpForm = document.getElementById("signup-form");
-          const panelTitle = document.getElementById("panel-title");
-          const panelText = document.getElementById("panel-text");
-          const panelButton = document.querySelector(".side-panel button");
-
-          isSignUp = !isSignUp;
-
-          if (isSignUp) {
-            signInForm.classList.remove('active');
-            signUpForm.classList.add('active');
-            panelTitle.innerText = "Already Registered?";
-            panelText.innerText = "Login with your registered email and password.";
-            panelButton.innerText = "LOGIN";
-          } else {
-            signInForm.classList.add('active');
-            signUpForm.classList.remove('active');
-            panelTitle.innerText = "New Here?";
-            panelText.innerText = "Register as a laborer with your skills and experience to get hired easily!";
-            panelButton.innerText = "REGISTER";
-          }
-        }
-    </script>
+    @section Scripts {
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    }
 </body>
 </html>
-
