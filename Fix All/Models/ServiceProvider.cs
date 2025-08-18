@@ -43,8 +43,9 @@ namespace Fix_All.Models
 
         // ✅ New Experience field
         [Required(ErrorMessage = "Experience is required")]
-        [Range(0, 50, ErrorMessage = "Experience must be between 0 and 50 years")]
-        public int Experience { get; set; }
+        [RegularExpression(@"^(?:[0-9]|[1-4][0-9]|50)$", ErrorMessage = "Experience must be between 0 and 50 years")]
+        public string Experience { get; set; }
+
 
         [Required(ErrorMessage = "Password is required")]
         [MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
