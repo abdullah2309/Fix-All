@@ -1,0 +1,20 @@
+﻿@model LaborField
+@{
+    Layout = "~/Views/Shared/_Admin_layout.cshtml";
+    ViewData["Title"] = "Create Labor Field";
+}
+
+<div class="card shadow-sm p-4">
+    <h2 class="mb-3">Create New Field</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="FieldName" class="form-label"></label>
+            <input asp-for="FieldName" class="form-control" placeholder="Enter field name" />
+            <span asp-validation-for="FieldName" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>

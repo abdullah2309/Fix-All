@@ -1,0 +1,18 @@
+﻿@model LaborField
+@{
+    Layout = "~/Views/Shared/_Admin_layout.cshtml";
+    ViewData["Title"] = "Delete Labor Field";
+}
+
+<div class="card shadow-sm p-4">
+    <h2 class="mb-3 text-danger">Delete Field</h2>
+
+    <h5>Are you sure you want to delete this?</h5>
+    <p><strong>@Model.FieldName</strong></p>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="FieldId" />
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
