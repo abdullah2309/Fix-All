@@ -32,7 +32,7 @@
                     <th>Field</th>
                     <th>Experience</th>
                     <th>CV</th>
-                    <th>Profile</th>
+                    
                     <th style="width:200px;">Actions</th>
                 </tr>
             </thead>
@@ -54,12 +54,7 @@
                                 <a href="@Url.Content(item.CVFilePath)" target="_blank" class="btn btn-link btn-sm">View CV</a>
                             }
                         </td>
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.ProfileImagePath))
-                            {
-                                <img src="@Url.Content(item.ProfileImagePath)" width="50" height="50" class="rounded-circle" />
-                            }
-                        </td>
+                        
                         <td>
                             <form asp-action="Approve" asp-route-id="@item.LarberId" method="post" class="d-inline">
                                 <button type="submit" class="btn btn-success btn-sm">Approve</button>
