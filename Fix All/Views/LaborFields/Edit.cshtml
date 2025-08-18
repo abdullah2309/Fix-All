@@ -1,0 +1,22 @@
+﻿@model LaborField
+@{
+    Layout = "~/Views/Shared/_Admin_layout.cshtml";
+    ViewData["Title"] = "Edit Labor Field";
+}
+
+<div class="card shadow-sm p-4">
+    <h2 class="mb-3">Edit Field</h2>
+
+    <form asp-action="Edit" method="post">
+        <input type="hidden" asp-for="FieldId" />
+
+        <div class="mb-3">
+            <label asp-for="FieldName" class="form-label"></label>
+            <input asp-for="FieldName" class="form-control" />
+            <span asp-validation-for="FieldName" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>

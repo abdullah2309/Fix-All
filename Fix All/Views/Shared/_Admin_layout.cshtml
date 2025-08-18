@@ -149,22 +149,21 @@
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
                     <li class="nav-label first">Main Menu</li>
-                    <li><a asp-controller="administrator" asp-action="Index">Dashboard</a></li>
-                    <li><a asp-controller="adminlogin" asp-action="show">Change Password</a></li>
-                    <li><a asp-controller="administrator" asp-action="Order">Order</a></li>
-                    <li><a asp-controller="administrator" asp-action="addcategory">Add Category</a></li>
-                    <li><a asp-controller="adminproduct" asp-action="Index">Add Product</a></li>
-                    <li><a asp-controller="adminaddsaleproduct" asp-action="Index">Add Sale Product</a></li>
-                    <li><a asp-controller="registerdata" asp-action="Index">Register People Data</a></li>
-                    <li><a asp-controller="administrator" asp-action="showfeedback">Feedback</a></li>
+                    <li><a asp-controller="Admin" asp-action="Index">Dashboard</a></li>
+                    <li><a asp-controller="LaborFields" asp-action="Index">Add Labor Fields</a></li>
+                    
                 </ul>
             </div>
         </div>
 
         <!-- Main Content -->
-        <main class="container-fluid p-3">
+       
+         <div class="content-body">
+    <div class="container-fluid">
             @RenderBody()
-        </main>
+            </div>
+        </div>
+    
 
         <!-- Footer -->
         <div class="footer text-center py-3">
