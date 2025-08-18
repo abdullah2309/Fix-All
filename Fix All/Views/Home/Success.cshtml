@@ -1,0 +1,68 @@
+﻿@{
+    Layout = null; // agar aap _Layout.cshtml use karna chahte ho to is line ko hata  dff
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application Success</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f5f7fa;
+        }
+
+        .success-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .success-container h1 {
+            color: #28a745;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .success-container p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .btn-home {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <h1>🎉 Congratulations!</h1>
+        <p>Your labor application has been successfully submitted.</p>
+        <p>Our team will contact you via <b>email or phone call</b> if you are selected.</p>
+        <a asp-action="Index" class="btn-home">Back to Home</a>
+    </div>
+</body>
+</html>

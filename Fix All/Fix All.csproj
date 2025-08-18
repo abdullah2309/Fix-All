@@ -33,6 +33,9 @@
     <Folder Include="wwwroot\lib\jquery-validation\dist\" />
     <Folder Include="wwwroot\lib\jquery\" />
     <Folder Include="wwwroot\lib\jquery\dist\" />
+    <Folder Include="wwwroot\uploads\images\" />
+    <Folder Include="wwwroot\uploads\cv\" />
+    <Folder Include="wwwroot\uploads\profile\" />
   </ItemGroup>
 
 </Project>
