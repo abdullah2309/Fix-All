@@ -37,6 +37,9 @@ namespace Fix_All.Models
         [Required(ErrorMessage = "Select a service field")]
         [ForeignKey("LaborField")]
         public int? FieldId { get; set; }
+
+        
+        public string addmorefield { get; set; }
         public LaborField? LaborField { get; set; } // ✅ Navigation property
 
         public bool IsDiploma { get; set; }
