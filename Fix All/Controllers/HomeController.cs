@@ -37,7 +37,7 @@ namespace Fix_All.Controllers
         public IActionResult LaborSignin()
         {
             PopulateFieldsDropdown();
-            return View();
+            return View(new ServiceProviderModel());
         }
 
         [HttpPost]
@@ -53,6 +53,26 @@ namespace Fix_All.Controllers
             // ✅ Repopulate dropdown if validation fails
             PopulateFieldsDropdown();
 
+            // ✅ Handle CV upload OR keep old one
+            if (cv != null && cv.Length > 0)
+            {
+                model.CVFilePath = SaveFile(cv, "uploads/cv");
+            }
+            else if (!string.IsNullOrEmpty(model.CVFilePath))
+            {
+                ModelState.Remove("CVFilePath"); // keep existing
+            }
+
+            // ✅ Handle Profile upload OR keep old one
+            if (profileImage != null && profileImage.Length > 0)
+            {
+                model.ProfileImagePath = SaveFile(profileImage, "uploads/profile");
+            }
+            else if (!string.IsNullOrEmpty(model.ProfileImagePath))
+            {
+                ModelState.Remove("ProfileImagePath"); // keep existing
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -60,18 +80,6 @@ namespace Fix_All.Controllers
 
             // ✅ Hash password before saving
             model.PasswordHash = HashPassword(model.PasswordHash);
-
-            // ✅ Handle CV upload
-            if (cv != null && cv.Length > 0)
-            {
-                model.CVFilePath = SaveFile(cv, "uploads/cv");
-            }
-
-            // ✅ Handle Profile Image upload
-            if (profileImage != null && profileImage.Length > 0)
-            {
-                model.ProfileImagePath = SaveFile(profileImage, "uploads/profile");
-            }
 
             // ✅ Save to DB
             _context.ServiceProviders.Add(model);
@@ -82,7 +90,7 @@ namespace Fix_All.Controllers
 
         public IActionResult Success()
         {
-            return View(); // ✅ Create a "Success.cshtml" view
+            return View();
         }
 
         private string HashPassword(string password)
@@ -117,5 +125,6 @@ namespace Fix_All.Controllers
                     Text = f.FieldName
                 }).ToList();
         }
+
     }
 }
