@@ -1,0 +1,39 @@
+﻿@model IEnumerable<LaborField>
+
+@{
+    Layout = "~/Views/Shared/_Admin_layout.cshtml";
+    ViewData["Title"] = "Labor Fields";
+}
+
+<div class="card shadow-sm p-3">
+    <h2 class="mb-3">Labor Fields</h2>
+
+    <p>
+        <a asp-action="Create" class="btn btn-primary">+ Add New Field</a>
+    </p>
+
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Field ID</th>
+                <th>Field Name</th>
+                <th style="width:200px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-dark">@item.FieldId</td>
+                    <td class="text-dark">@item.FieldName</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.FieldId" class="btn btn-info btn-sm">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.FieldId" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.FieldId" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

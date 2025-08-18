@@ -1,0 +1,20 @@
+﻿@model LaborField
+@{
+    Layout = "~/Views/Shared/_Admin_layout.cshtml";
+    ViewData["Title"] = "Field Details";
+}
+
+<div class="card shadow-sm p-4">
+    <h2 class="mb-3">Field Details</h2>
+
+    <dl class="row">
+        <dt class="col-sm-3">ID</dt>
+        <dd class="col-sm-9">@Model.FieldId</dd>
+
+        <dt class="col-sm-3">Name</dt>
+        <dd class="col-sm-9">@Model.FieldName</dd>
+    </dl>
+
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+    <a asp-action="Edit" asp-route-id="@Model.FieldId" class="btn btn-warning">Edit</a>
+</div>

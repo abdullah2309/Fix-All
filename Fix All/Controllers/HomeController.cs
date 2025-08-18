@@ -1,47 +1,130 @@
-using Fix_All.Models;
+﻿using Fix_All.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Cryptography;
+using System.Text;
+
+using ServiceProviderModel = Fix_All.Models.ServiceProvider;
 
 namespace Fix_All.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly mydbcontext _context;
+        private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            ILogger<HomeController> logger,
+            mydbcontext context,
+            IWebHostEnvironment env,
+            IConfiguration configuration)
         {
             _logger = logger;
+            _context = context;
+            _env = env;
+            _configuration = configuration;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
+        public IActionResult About() => View();
+        public IActionResult Services() => View();
+        public IActionResult Contact() => View();
+        public IActionResult Signin() => View();
 
-        public IActionResult About()
-        {
-            return View();
-        }
-        public IActionResult Services()
-        {
-            return View();
-        }
-        public IActionResult Contact()
-        {
-            return View(); 
-        }
-        public IActionResult Signin()
-        {
-            return View();
-        }
+        [HttpGet]
         public IActionResult LaborSignin()
         {
+            PopulateFieldsDropdown();
+            return View(new ServiceProviderModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult LaborSignin(ServiceProviderModel model, IFormFile? cv, IFormFile? profileImage, string confirmPassword)
+        {
+            // ✅ Confirm password check
+            if (model.PasswordHash != confirmPassword)
+            {
+                ModelState.AddModelError("PasswordHash", "Passwords do not match!");
+            }
+
+            // ✅ Repopulate dropdown if validation fails
+            PopulateFieldsDropdown();
+
+            // ✅ Handle CV upload OR keep old one
+            if (cv != null && cv.Length > 0)
+            {
+                model.CVFilePath = SaveFile(cv, "uploads/cv");
+            }
+            else if (!string.IsNullOrEmpty(model.CVFilePath))
+            {
+                ModelState.Remove("CVFilePath"); // keep existing
+            }
+
+            // ✅ Handle Profile upload OR keep old one
+            if (profileImage != null && profileImage.Length > 0)
+            {
+                model.ProfileImagePath = SaveFile(profileImage, "uploads/profile");
+            }
+            else if (!string.IsNullOrEmpty(model.ProfileImagePath))
+            {
+                ModelState.Remove("ProfileImagePath"); // keep existing
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // ✅ Hash password before saving
+            model.PasswordHash = HashPassword(model.PasswordHash);
+
+            // ✅ Save to DB
+            _context.ServiceProviders.Add(model);
+            _context.SaveChanges();
+
+            return RedirectToAction("Success");
+        }
+
+        public IActionResult Success()
+        {
             return View();
         }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+
+        private string HashPassword(string password)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
         }
+
+        private string SaveFile(IFormFile file, string folderPath)
+        {
+            var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            var uploadPath = Path.Combine(_env.WebRootPath, folderPath);
+            Directory.CreateDirectory(uploadPath); // ensure folder exists
+            var filePath = Path.Combine(uploadPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+            return "/" + folderPath + "/" + fileName;
+        }
+
+        private void PopulateFieldsDropdown()
+        {
+            ViewBag.Fields = _context.LaborFields
+                .Select(f => new SelectListItem
+                {
+                    Value = f.FieldId.ToString(),
+                    Text = f.FieldName
+                }).ToList();
+        }
+
     }
 }
