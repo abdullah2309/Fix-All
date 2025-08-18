@@ -5,7 +5,7 @@
 namespace Fix_All.Migrations
 {
     /// <inheritdoc />
-    public partial class laborfieldserviceprovider : Migration
+    public partial class serve : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,8 +40,7 @@ namespace Fix_All.Migrations
                     IsDiploma = table.Column<bool>(type: "bit", nullable: false),
                     FieldId = table.Column<int>(type: "int", nullable: false),
                     CVFilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfileImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmailVerified = table.Column<bool>(type: "bit", nullable: false)
+                    ProfileImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

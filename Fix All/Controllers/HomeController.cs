@@ -1,8 +1,10 @@
-using Fix_All.Models;
+﻿using Fix_All.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
+
+using ServiceProviderModel = Fix_All.Models.ServiceProvider;
 
 namespace Fix_All.Controllers
 {
@@ -10,87 +12,110 @@ namespace Fix_All.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly mydbcontext _context;
+        private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(ILogger<HomeController> logger, mydbcontext context)
+        public HomeController(
+            ILogger<HomeController> logger,
+            mydbcontext context,
+            IWebHostEnvironment env,
+            IConfiguration configuration)
         {
             _logger = logger;
             _context = context;
+            _env = env;
+            _configuration = configuration;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
+        public IActionResult About() => View();
+        public IActionResult Services() => View();
+        public IActionResult Contact() => View();
+        public IActionResult Signin() => View();
 
-        public IActionResult About()
-        {
-            return View();
-        }
-
-        public IActionResult Services()
-        {
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            return View();
-        }
-
-        public IActionResult Signin()
-        {
-            return View();
-        }
-
+        [HttpGet]
         public IActionResult LaborSignin()
         {
-            ViewBag.Fields = new SelectList(_context.LaborFields, "FieldId", "Name");
+            PopulateFieldsDropdown();
             return View();
         }
 
-        //public IActionResult Register()
-        //{
-        //    ViewBag.Fields = new SelectList(_context.LaborFields, "FieldId", "Name");
-        //    return View();
-        //}
-
         [HttpPost]
-        public async Task<IActionResult> Register(ServiceProvider model, IFormFile CVFile, IFormFile ProfileImage)
+        [ValidateAntiForgeryToken]
+        public IActionResult LaborSignin(ServiceProviderModel model, IFormFile? cv, IFormFile? profileImage, string confirmPassword)
         {
+            // ✅ Confirm password check
+            if (model.PasswordHash != confirmPassword)
+            {
+                ModelState.AddModelError("PasswordHash", "Passwords do not match!");
+            }
+
+            // ✅ Repopulate dropdown if validation fails
+            PopulateFieldsDropdown();
+
             if (!ModelState.IsValid)
             {
-                ViewBag.Fields = new SelectList(_context.LaborFields, "FieldId", "Name");
                 return View(model);
             }
 
-            // Save files
-            if (CVFile != null && CVFile.Length > 0)
+            // ✅ Hash password before saving
+            model.PasswordHash = HashPassword(model.PasswordHash);
+
+            // ✅ Handle CV upload
+            if (cv != null && cv.Length > 0)
             {
-                var filePath = Path.Combine("wwwroot/uploads/cv", CVFile.FileName);
-                using var stream = new FileStream(filePath, FileMode.Create);
-                await CVFile.CopyToAsync(stream);
-                model.CVFilePath = "/uploads/cv/" + CVFile.FileName;
+                model.CVFilePath = SaveFile(cv, "uploads/cv");
             }
 
-            if (ProfileImage != null && ProfileImage.Length > 0)
+            // ✅ Handle Profile Image upload
+            if (profileImage != null && profileImage.Length > 0)
             {
-                var imgPath = Path.Combine("wwwroot/uploads/images", ProfileImage.FileName);
-                using var stream = new FileStream(imgPath, FileMode.Create);
-                await ProfileImage.CopyToAsync(stream);
-                model.ProfileImagePath = "/uploads/images/" + ProfileImage.FileName;
+                model.ProfileImagePath = SaveFile(profileImage, "uploads/profile");
             }
 
+            // ✅ Save to DB
             _context.ServiceProviders.Add(model);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            TempData["Success"] = "Application submitted successfully!";
-            return RedirectToAction("LaborSignin");
+            return RedirectToAction("Success");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Success()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(); // ✅ Create a "Success.cshtml" view
+        }
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+        }
+
+        private string SaveFile(IFormFile file, string folderPath)
+        {
+            var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            var uploadPath = Path.Combine(_env.WebRootPath, folderPath);
+            Directory.CreateDirectory(uploadPath); // ensure folder exists
+            var filePath = Path.Combine(uploadPath, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+            return "/" + folderPath + "/" + fileName;
+        }
+
+        private void PopulateFieldsDropdown()
+        {
+            ViewBag.Fields = _context.LaborFields
+                .Select(f => new SelectListItem
+                {
+                    Value = f.FieldId.ToString(),
+                    Text = f.FieldName
+                }).ToList();
         }
     }
 }
