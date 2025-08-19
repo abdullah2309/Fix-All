@@ -16,14 +16,17 @@ namespace Fix_All.Controllers
         {
             return View();
         }
-     
+
 
         public async Task<IActionResult> applyforlabar()
         {
-            var providers = await _context.ServiceProviders.Include(s => s.LaborField) // related LaborField bhi laye
+            var providers = await _context.ServiceProviders
+                .Include(s => s.LaborField)
+                .OrderByDescending(s => s.LarberId) // ✅ Newest first
                 .ToListAsync();
 
             return View(providers);
         }
+
     }
 }
