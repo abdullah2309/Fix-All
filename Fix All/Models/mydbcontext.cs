@@ -12,6 +12,8 @@ namespace Fix_All.Models
 
         public DbSet<ServiceProvider> ServiceProviders { get; set; }
         public DbSet<LaborField> LaborFields { get; set; }
+        public DbSet<approve_laber> approve_labers { get; set; }
+       
 
     }
 }
