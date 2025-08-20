@@ -24,7 +24,14 @@ namespace Fix_All.Controllers
                 .Include(s => s.LaborField)
                 .OrderByDescending(s => s.LarberId) // ✅ Newest first
                 .ToListAsync();
-
+            return View(providers);
+        }     
+        public async Task<IActionResult> Labers()
+        {
+            var providers = await _context.approve_labers
+                .Include(s => s.LaborField)
+                .OrderByDescending(s => s.ApproveLarberId) // ✅ Newest first
+                .ToListAsync();
             return View(providers);
         }
         [HttpPost]
@@ -66,7 +73,7 @@ namespace Fix_All.Controllers
             await SendApprovalEmail(approved.Email, approved.FirstName);
 
             TempData["Message"] = "Labor approved successfully and confirmation email sent.";
-            return RedirectToAction("applyforlabar");
+            return RedirectToAction("Labers");
         }
 
         private async Task SendApprovalEmail(string toEmail, string name)
