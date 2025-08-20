@@ -12,7 +12,7 @@ public class LaborFieldsController : Controller
         _context = context;
     }
 
-    // READ: List all
+    // READ: List all .
     public async Task<IActionResult> Index()
     {
         return View(await _context.LaborFields.ToListAsync());
@@ -46,7 +46,7 @@ public class LaborFieldsController : Controller
         return View(laborField);
     }
 
-    // UPDATE: POST
+    // UPDATE: POST ,
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, LaborField laborField)
