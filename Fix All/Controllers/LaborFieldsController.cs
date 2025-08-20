@@ -12,7 +12,7 @@ public class LaborFieldsController : Controller
         _context = context;
     }
 
-    // READ: List all
+    // READ: List all .
     public async Task<IActionResult> Index()
     {
         return View(await _context.LaborFields.ToListAsync());
