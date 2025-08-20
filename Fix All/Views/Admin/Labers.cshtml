@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Fix_All.Models.approve_laber>
+
+@{
+    Layout = "~/Views/Shared/_Admin_layout.cshtml";
+    ViewData["Title"] = "Service Providers";
+}
+
+<div class="card shadow-sm p-3">
+    <h2 class="mb-3">Approve Labers</h2>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">@TempData["Message"]</div>
+    }
+
+    <!-- Top Scrollbar -->
+    <div id="top-scroll" style="overflow-x:auto; height:16px;">
+        <div style="height:1px;"></div> <!-- dummy div to generate scrollbar -->
+    </div>
+
+    <!-- Main Scroll Wrapper -->
+    <div id="main-scroll" style="overflow-x:auto; max-height:500px;">
+        <table class="table table-hover table-bordered text-dark">
+            <thead class="table-dark sticky-header">
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>CNIC</th>
+                    <th>Education</th>
+                    <th>Field</th>
+                    <th>Experience</th>
+                   
+
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ApproveLarberId</td>
+                        <td>@item.FirstName @item.LastName</td>
+                        <td>@item.Email</td>
+                        <td>@item.Phone</td>
+                        <td>@item.CNIC</td>
+                        <td>@item.Education</td>
+                        <td>@item.LaborField?.FieldName ?? item.</td>
+                        <td>@item.Experience</td>
+                        
+
+              
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    /* Force table text to always be black */
+    .table td, .table th {
+        color: black !important;
+        white-space: nowrap;
+    }
+
+    /* Sticky header */
+    .sticky-header th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #212529; /* Bootstrap dark */
+        color: #fff !important;
+    }
+</style>
+
+<script>
+    const topScroll = document.getElementById("top-scroll");
+    const mainScroll = document.getElementById("main-scroll");
+
+    // Sync scrolling between top and main scrollbar
+    topScroll.addEventListener("scroll", () => {
+        mainScroll.scrollLeft = topScroll.scrollLeft;
+    });
+
+    mainScroll.addEventListener("scroll", () => {
+        topScroll.scrollLeft = mainScroll.scrollLeft;
+    });
+
+    // Adjust top scrollbar width to match table
+    window.addEventListener("load", () => {
+        topScroll.firstElementChild.style.width = mainScroll.scrollWidth + "px";
+    });
+</script>
