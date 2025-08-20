@@ -1,0 +1,259 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Labor Policy & Company Pricing</title>
+    <style>
+        :root{
+          --bg:#0b1220;          /* page background (dark mode friendly) */
+          --card:#0f172a;        /* card bg */
+          --text:#e2e8f0;        /* primary text */
+          --muted:#94a3b8;       /* secondary text */
+          --brand:#22d3ee;       /* accent */
+          --ok:#34d399;          /* success */
+          --warn:#fbbf24;        /* warning */
+          --danger:#fb7185;      /* danger */
+          --border:rgba(255,255,255,.08);
+          --shadow:0 10px 30px rgba(0,0,0,.35);
+          --radius:22px;
+          --radius-sm:14px;
+          --space:18px;
+          --space-lg:28px;
+          --maxw:1100px;
+        }
+        *{box-sizing:border-box}
+        html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif}
+        a{color:var(--brand);text-decoration:none}
+        a:hover{text-decoration:underline}
+
+        .wrap{max-width:var(--maxw);margin:auto;padding:clamp(16px,4vw,40px)}
+        header{display:grid;gap:10px;margin-bottom:var(--space-lg)}
+        .title{font-weight:800;letter-spacing:.3px;font-size:clamp(28px,2.8vw,40px)}
+        .subtitle{color:var(--muted);font-size:clamp(14px,1.6vw,16px)}
+
+        .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+        .btn{appearance:none;border:1px solid var(--border);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));color:var(--text);padding:10px 14px;border-radius:999px;box-shadow:var(--shadow);cursor:pointer}
+        .btn:hover{transform:translateY(-1px)}
+        .btn.brand{border-color:rgba(34,211,238,.35);box-shadow:0 8px 22px rgba(34,211,238,.18)}
+
+        .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--space)}
+        .col-8{grid-column:span 8}
+        .col-4{grid-column:span 4}
+        @@media (max-width:980px){.col-8,.col-4{grid-column:1/-1}}
+
+        .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(18px,2.4vw,28px);box-shadow:var(--shadow)}
+        .card h2{margin:0 0 10px;font-size:clamp(18px,2vw,22px)}
+        .card h3{margin:18px 0 8px;font-size:clamp(16px,1.8vw,18px)}
+        .muted{color:var(--muted)}
+        .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.03);font-size:12px;color:var(--muted)}
+
+        ul{margin:10px 0 0 18px}
+        li{margin:6px 0}
+
+        .table{width:100%;border-collapse:separate;border-spacing:0 10px;margin-top:8px}
+        .table thead th{font-weight:700;text-align:left;color:var(--muted);font-size:14px}
+        .row{display:grid;grid-template-columns:1.2fr .8fr .8fr .8fr;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.02))}
+        .row strong{font-weight:700}
+
+        .note{font-size:13px;color:var(--muted);margin-top:8px}
+        .ok{color:var(--ok)}
+        .warn{color:var(--warn)}
+        .danger{color:var(--danger)}
+
+        footer{margin:var(--space-lg) 0;color:var(--muted);font-size:13px}
+        .footer-grid{display:grid;gap:8px}
+
+        /* Print Styles */
+        @@media print{
+          :root{--bg:#fff;--card:#fff;--text:#111827;--muted:#475569;--border:#e5e7eb}
+          body{background:#fff}
+          .btn,.toolbar{display:none!important}
+          .wrap{padding:0}
+          a{text-decoration:underline}
+          .card{box-shadow:none}
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="badge">Acme Services (Pvt.) Ltd. • Policy Document</div>
+            <div class="title">Labor Policy & Company Pricing</div>
+            <div class="subtitle">This page outlines our employment standards, tax practices, and pricing structure—including a <strong>50% company margin</strong> applied on labor services. Replace names, rates, and taxes with your local values.</div>
+            <div class="toolbar">
+            </div>
+        </header>
+
+        <section class="grid">
+            <div class="col-8 card">
+                <h2>1) Purpose & Scope</h2>
+                <p>Our labor policy defines fair employment practices, transparent pricing, and compliance with applicable labor and tax laws. It applies to all employees, contractors, and interns engaged by <strong>Acme Services (Pvt.) Ltd.</strong></p>
+
+                <h2>2) Employment Categories</h2>
+                <ul>
+                    <li><strong>Full‑time:</strong> 40 hours/week, eligible for benefits.</li>
+                    <li><strong>Part‑time:</strong> Up to 30 hours/week, benefits may vary.</li>
+                    <li><strong>Contract:</strong> Project‑based with written scope and duration.</li>
+                    <li><strong>Interns/Trainees:</strong> Fixed‑term learning assignments.</li>
+                </ul>
+
+                <h2>3) Working Hours & Overtime</h2>
+                <ul>
+                    <li>Standard schedule: <strong>Mon–Sat, 9:00–17:00</strong> (modifiable by project).</li>
+                    <li>Breaks: Minimum 60 minutes on full‑day shifts.</li>
+                    <li>Overtime requires prior approval and is compensated per law or contract.</li>
+                </ul>
+
+                <h2>4) Compensation Policy</h2>
+                <ul>
+                    <li>Pay cycles: monthly for staff, milestone‑based for contractors.</li>
+                    <li>All payments are documented with payslips/invoices.</li>
+                    <li>Rates are reviewed periodically based on performance and market trends.</li>
+                </ul>
+
+                <h2 id="tax">5) Taxes & Statutory Deductions</h2>
+                <ul>
+                    <li>We withhold applicable <strong>income tax</strong> and other statutory deductions as required by local law.</li>
+                    <li>Invoices may include <strong>sales tax/VAT</strong> (rate varies by jurisdiction and service type).</li>
+                    <li>Clients receive tax‑compliant invoices with clear line items.</li>
+                </ul>
+
+                <h2 id="margin">6) Company Margin (50%)</h2>
+                <p>To cover operating costs (management, tools, QA, support) and ensure business sustainability, our standard <strong>company margin is 50%</strong> on the <em>direct labor cost</em> unless otherwise agreed in writing.</p>
+                <ul>
+                    <li>Margin is applied <em>before</em> calculating any applicable taxes.</li>
+                    <li>Discounts or promotional rates must be approved by Finance.</li>
+                </ul>
+
+                <h2 id="pricing">7) Pricing & Billing</h2>
+                <p>Below is an <strong>example</strong> bill to show how margin and tax are calculated. Replace the numbers with your actual costs and tax rates.</p>
+
+                <div class="row">
+                    <div><strong>Description</strong><br />Senior Technician (8 hours)</div>
+                    <div><strong>Qty/Units</strong><br />1 day</div>
+                    <div><strong>Rate</strong><br />Rs 10,000 (direct labor)</div>
+                    <div><strong>Line Total</strong><br />Rs 10,000</div>
+                </div>
+                <div class="row">
+                    <div>Company Margin (50% of direct labor)</div>
+                    <div>—</div>
+                    <div>50%</div>
+                    <div>Rs 5,000</div>
+                </div>
+                <div class="row">
+                    <div><strong>Subtotal (Labor + Margin)</strong></div>
+                    <div>—</div>
+                    <div>—</div>
+                    <div><strong>Rs 15,000</strong></div>
+                </div>
+                <div class="row">
+                    <div>Sales Tax / VAT (example 16% on subtotal)</div>
+                    <div>—</div>
+                    <div>16%</div>
+                    <div>Rs 2,400</div>
+                </div>
+                <div class="row">
+                    <div><strong>Grand Total (Payable)</strong></div>
+                    <div>—</div>
+                    <div>—</div>
+                    <div><strong>Rs 17,400</strong></div>
+                </div>
+                <p class="note">Note: Replace <em>16%</em> with the official tax rate that applies in your city/country. This sample is for demonstration only and does not constitute tax advice.</p>
+
+                <h2>8) Leave & Benefits</h2>
+                <ul>
+                    <li>Annual leave, sick leave, and public holidays per policy or law.</li>
+                    <li>Basic health & safety equipment provided for field roles.</li>
+                    <li>Additional benefits may include bonuses, training, and insurance (where applicable).</li>
+                </ul>
+
+                <h2>9) Code of Conduct & Safety</h2>
+                <ul>
+                    <li>Zero tolerance for harassment, discrimination, or unsafe practices.</li>
+                    <li>Mandatory compliance with PPE and site‑specific safety rules.</li>
+                    <li>Conflicts of interest must be disclosed to HR.</li>
+                </ul>
+
+                <h2>10) Data Protection & Confidentiality</h2>
+                <ul>
+                    <li>Client and employee data are handled under strict confidentiality.</li>
+                    <li>Only authorized personnel may access sensitive information.</li>
+                </ul>
+
+                <h2>11) Grievance & Disciplinary Procedure</h2>
+                <ul>
+                    <li>Report concerns to your line manager or HR in writing.</li>
+                    <li>Issues are investigated fairly with documented outcomes.</li>
+                    <li>Progressive discipline may include warnings, suspension, or termination as per law.</li>
+                </ul>
+
+                <h2>12) Policy Governance</h2>
+                <ul>
+                    <li>This policy is reviewed at least annually or upon legal changes.</li>
+                    <li>Exceptions require written approval from the Head of HR and Finance.</li>
+                </ul>
+                <br>
+
+
+                <!-- apply now button -->
+                <a asp-action="LaborSignin" class="btn brand" style="width: 120px;">Apply Now</a>
+
+
+
+                <br>
+                <br>
+
+                <div class="note">Disclaimer: This is a <strong>template</strong> for educational and demonstration purposes. Consult a qualified professional to adapt it to your local labor and tax regulations.</div>
+            </div>
+
+            <aside class="col-4">
+                <div class="card">
+                    <h3>Quick Company Info</h3>
+                    <ul>
+                        <li><strong>Company:</strong> Acme Services (Pvt.) Ltd.</li>
+                        <li><strong>Registration:</strong> 123456‑PK</li>
+                        <li><strong>Address:</strong> 12 Business Park, City</li>
+                        <li><strong>Email:</strong> info@example.com</li>
+                        <li><strong>Phone:</strong> +92 300 0000000</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Key Highlights</h3>
+                    <ul>
+                        <li><span class="ok">Fair pay & documented invoices</span></li>
+                        <li><span class="warn">Transparent taxes shown on bills</span></li>
+                        <li><span class="ok">Standard margin: 50% (pre‑tax)</span></li>
+                        <li><span class="ok">Print‑ready policy document</span></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Customization Tips</h3>
+                    <ul>
+                        <li>Search for <code>Acme Services</code> and replace with your company name.</li>
+                        <li>Adjust tax rate in the Pricing section.</li>
+                        <li>Update schedule, benefits, and contact details.</li>
+                    </ul>
+                </div>
+
+            </aside>
+        </section>
+
+        <footer>
+            <div class="footer-grid">
+                <div>Last updated: <strong>August 19, 2025</strong></div>
+                <div>Authorized by: HR & Finance Departments</div>
+                <div>© <span id="yr"></span> Acme Services (Pvt.) Ltd. All rights reserved.</div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('yr').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -32,6 +32,7 @@ namespace Fix_All.Controllers
         public IActionResult Services() => View();
         public IActionResult Contact() => View();
         public IActionResult Signin() => View();
+        public IActionResult applynow() => View();
 
         [HttpGet]
         public IActionResult LaborSignin()
