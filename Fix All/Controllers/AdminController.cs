@@ -1,6 +1,10 @@
 ﻿using Fix_All.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Mail;
+using MailKit.Net.Smtp;
+using MimeKit;
+
 
 namespace Fix_All.Controllers
 {
@@ -99,6 +103,62 @@ namespace Fix_All.Controllers
                 Console.WriteLine("Email sending failed: " + ex.Message);
             }
         }
+        [HttpPost]
+        [HttpPost]
+        public async Task<IActionResult> Reject(int id)
+        {
+            var provider = await _context.ServiceProviders.FindAsync(id);
+            if (provider != null)
+            {
+                // ✉️ Email send before removing
+                await SendRejectionEmail(provider.Email, provider.FirstName);
+
+                _context.ServiceProviders.Remove(provider);
+                await _context.SaveChangesAsync();
+
+                TempData["Message"] = "Service Provider rejected and email sent successfully.";
+            }
+            else
+            {
+                TempData["Message"] = "Service Provider not found.";
+            }
+
+            return RedirectToAction("applyforlabar");
+        }
+
+        private async Task SendRejectionEmail(string toEmail, string name)
+        {
+            try
+            {
+                using (var client = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587))
+                {
+                    client.Credentials = new System.Net.NetworkCredential("abdullah2309r@gmail.com", "gwtonnsduolnuzwx");
+                    client.EnableSsl = true;
+
+                    var mailMessage = new System.Net.Mail.MailMessage();
+                    mailMessage.From = new System.Net.Mail.MailAddress("abdullah2309r@gmail.com", "Fix All Admin");
+                    mailMessage.To.Add(toEmail);
+                    mailMessage.Subject = "Application Rejected - Fix All";
+                    mailMessage.Body = $@"
+                <h3>Dear {name},</h3>
+                <p>We regret to inform you that your application has been <b>rejected</b>.</p>
+                <p>If you have any questions, please contact our support team.</p>
+                <br>
+                <p>Best Regards,</p>
+                <p><b>Fix All Team</b></p>";
+                    mailMessage.IsBodyHtml = true;
+
+                    await client.SendMailAsync(mailMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Email sending failed: " + ex.Message);
+            }
+        }
+
+
+
 
 
 
