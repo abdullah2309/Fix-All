@@ -46,7 +46,7 @@ public class LaborFieldsController : Controller
         return View(laborField);
     }
 
-    // UPDATE: POST
+    // UPDATE: POST ,
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, LaborField laborField)
