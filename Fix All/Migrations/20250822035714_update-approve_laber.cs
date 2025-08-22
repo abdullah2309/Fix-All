@@ -2,6 +2,7 @@
 
 #nullable disable
 
+
 namespace Fix_All.Migrations
 {
     /// <inheritdoc />
