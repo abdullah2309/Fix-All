@@ -2,4 +2,137 @@
     ViewData["Title"] = "Laber profile";
     Layout = "~/Views/Shared/_labar_panel.cshtml";
 }
-<link href="" rel="stylesheet" />
+<link href="~/Adminassets/laberprofile.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+
+<!-- Cover + Profile Image -->
+<div class="cover">
+    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Profile Image" class="profile-img">
+</div>
+
+<!-- Profile Container -->
+<div class="container">
+    <div class="profile-header">
+        <div class="profile-actions">
+            <button class="action-btn secondary-btn">
+                <i class="fas fa-plus"></i> Add profile section
+            </button>
+            <button class="action-btn secondary-btn">
+                <i class="fas fa-pencil-alt"></i> Edit profile
+            </button>
+            <button class="action-btn more-btn">
+                <i class="fas fa-ellipsis-h"></i>
+            </button>
+        </div>
+
+        <h2>John Doe</h2>
+        <p class="headline">Software Engineer | Web Developer | Freelancer</p>
+
+        <div class="location">
+            <i class="fas fa-map-marker-alt"></i> Karachi, Pakistan
+        </div>
+
+        <div class="connections">
+            <strong>500+</strong> connections
+        </div>
+
+        <div class="links">
+            <a href="mailto:john@example.com">
+                <i class="fas fa-envelope"></i> Email
+            </a>
+            <a href="https://linkedin.com/in/johndoe" target="_blank">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+            <a href="https://github.com/johndoe" target="_blank">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://portfolio.com" target="_blank">
+                <i class="fas fa-briefcase"></i> Portfolio
+            </a>
+        </div>
+    </div>
+
+    <!-- About -->
+    <div class="section">
+        <h3 class="section-title">About</h3>
+        <p>
+            Passionate software engineer with 5+ years of experience in building modern web
+            applications using ASP.NET Core, Flutter, and Angular. Focused on creating
+            scalable and user-friendly solutions. Strong problem-solving skills and a continuous
+            learner who stays updated with the latest industry trends and technologies.
+        </p>
+    </div>
+
+    <!-- Skills -->
+    <div class="section">
+        <h3 class="section-title">Skills</h3>
+        <div class="skills">
+            <span class="skill">ASP.NET Core</span>
+            <span class="skill">Flutter</span>
+            <span class="skill">Angular</span>
+            <span class="skill">SQL</span>
+            <span class="skill">JavaScript</span>
+            <span class="skill">TypeScript</span>
+            <span class="skill">React</span>
+            <span class="skill">Node.js</span>
+            <span class="skill">Docker</span>
+            <span class="skill">AWS</span>
+        </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="section">
+        <h3 class="section-title">Experience</h3>
+
+        <div class="experience-item">
+            <div class="exp-title">Senior Full Stack Developer</div>
+            <div class="exp-company">Tech Solutions Inc.</div>
+            <div class="exp-duration">Jan 2021 - Present · 2 yrs 8 mos</div>
+            <div class="exp-description">
+                Leading a team of 5 developers in building enterprise-level web applications.
+                Implemented CI/CD pipelines reducing deployment time by 40%.
+            </div>
+        </div>
+
+        <div class="experience-item">
+            <div class="exp-title">Web Developer</div>
+            <div class="exp-company">Digital Creations</div>
+            <div class="exp-duration">Mar 2018 - Dec 2020 · 2 yrs 10 mos</div>
+            <div class="exp-description">
+                Developed responsive web applications for various clients using modern JavaScript frameworks.
+                Improved application performance by 30% through code optimization.
+            </div>
+        </div>
+    </div>
+
+    <!-- Education -->
+    <div class="section">
+        <h3 class="section-title">Education</h3>
+
+        <div class="education-item">
+            <div class="edu-degree">Bachelor of Software Engineering</div>
+            <div class="edu-school">XYZ University</div>
+            <div class="edu-duration">2014 - 2018</div>
+        </div>
+
+        <div class="education-item">
+            <div class="edu-degree">Certified AWS Solutions Architect</div>
+            <div class="edu-school">Amazon Web Services</div>
+            <div class="edu-duration">2020</div>
+        </div>
+    </div>
+
+    <!-- CV -->
+    <div class="section">
+        <h3 class="section-title">Resume</h3>
+        <a href="#" class="btn">
+            <i class="fas fa-download"></i> Download CV
+        </a>
+    </div>
+</div>
+
+<div class="footer">
+    LinkedIn-style Profile Page © 2023
+</div>
