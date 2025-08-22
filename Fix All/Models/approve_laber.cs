@@ -38,23 +38,18 @@ namespace Fix_All.Models
         [ForeignKey("LaborField")]
         public int? FieldId { get; set; }
 
-
         public string addmorefield { get; set; }
         public LaborField? LaborField { get; set; } // ✅ Navigation property
 
         public bool IsDiploma { get; set; }
 
-        // ✅ New Experience field
         [Required(ErrorMessage = "Experience is required")]
         [StringLength(50, ErrorMessage = "Experience text cannot exceed 50 characters")]
         public string Experience { get; set; }
 
-
-
         [Required(ErrorMessage = "Password is required")]
         [MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
         public string PasswordHash { get; set; }
-
 
         // ✅ File paths
         public string? CVFilePath { get; set; }
@@ -64,8 +59,34 @@ namespace Fix_All.Models
         [MaxLength(20)]
         public string Status { get; set; } = "Pending";
 
-        // ✅ Feedback by Admin
         [MaxLength(250)]
         public string? Feedback { get; set; }
+
+        // -------------------------------
+        // 🔹 New LinkedIn-like features
+        // -------------------------------
+
+        // Cover image (like LinkedIn banner)
+        public string? CoverImagePath { get; set; }
+
+        // Short tagline/position (headline)
+        [MaxLength(100)]
+        public string? Headline { get; set; }
+
+        // About/Bio description
+        [MaxLength(1000)]
+        public string? About { get; set; }
+
+        // Skills (comma separated or JSON string)
+        [MaxLength(500)]
+        public string? Skills { get; set; }
+
+        // Optional social links
+        [Url]
+        public string? LinkedInUrl { get; set; }
+        [Url]
+        public string? FacebookUrl { get; set; }
+        [Url]
+        public string? PortfolioUrl { get; set; }
     }
 }
