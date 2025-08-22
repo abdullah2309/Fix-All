@@ -73,7 +73,7 @@ namespace Fix_All.Controllers
             return View(laber); // send laber data to dashboard
             
         }
-        public IActionResult viewprofile()
+        public IActionResult userpanelviewprofile()
         {
             return View();
         }
