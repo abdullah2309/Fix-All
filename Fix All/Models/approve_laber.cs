@@ -38,7 +38,7 @@ namespace Fix_All.Models
         [ForeignKey("LaborField")]
         public int? FieldId { get; set; }
 
-        public string addmorefield { get; set; }
+        public string? addmorefield { get; set; }
         public LaborField? LaborField { get; set; } // ✅ Navigation property
 
         public bool IsDiploma { get; set; }
