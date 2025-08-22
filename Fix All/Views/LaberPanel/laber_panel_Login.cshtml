@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@model Fix_All.Models.approve_laber
+@{
+    Layout = null;  // Correct way
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -191,7 +196,7 @@
             <p>Welcome back! laber panel</p>
         </div>
 
-        @model Fix_All.Models.approve_laber
+     
 
         <form asp-action="laber_panel_Login" method="post">
             <div class="form-group">

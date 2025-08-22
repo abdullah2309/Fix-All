@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Fix_All.Models;
+using System.Text;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Fix_All.Controllers
 {
@@ -16,12 +19,30 @@ namespace Fix_All.Controllers
         {
             return View();
         }
-        // POST Login
+        public static class PasswordHelper
+        {
+            public static string HashPassword(string password)
+            {
+                using (SHA256 sha256 = SHA256.Create())
+                {
+                    byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                    StringBuilder sb = new StringBuilder();
+                    foreach (var b in bytes)
+                        sb.Append(b.ToString("x2")); // convert to hex
+                    return sb.ToString();
+                }
+            }
+        }
         [HttpPost]
         public IActionResult laber_panel_Login(string Email, string PasswordHash)
         {
+            // Hash user input
+            string hashedInput = PasswordHelper.HashPassword(PasswordHash);
+
             var user = _context.approve_labers
-                               .FirstOrDefault(u => u.Email == Email && u.PasswordHash == PasswordHash && u.Status == "Approved");
+                               .FirstOrDefault(u => u.Email == Email &&
+                                                    u.PasswordHash == hashedInput &&
+                                                    u.Status == "Approved");
 
             if (user != null)
             {
@@ -30,14 +51,15 @@ namespace Fix_All.Controllers
                 HttpContext.Session.SetString("LaberName", user.FirstName + " " + user.LastName);
                 HttpContext.Session.SetString("LaberEmail", user.Email);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("index");
             }
             else
             {
-                ViewBag.Error = "Invalid Email or Password, or your account is not approved.";
+                ViewBag.Error = "Invalid Email/Password or not approved yet.";
                 return View();
             }
         }
+
         public IActionResult Index()
         {
             int? laberId = HttpContext.Session.GetInt32("LaberId");
