@@ -1,0 +1,141 @@
+﻿@model Fix_All.Models.approve_laber
+@{
+    ViewData["Title"] = "Edit Profile";
+    Layout = "~/Views/Shared/_labar_panel.cshtml";
+}
+
+<div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+        <h4>Edit Profile</h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="ApproveLarberId" />
+
+            <!-- ✅ Show all validation errors together -->
+            <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+            <!-- First Name + Last Name -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" />
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="mb-3">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Phone"></label>
+                <input asp-for="Phone" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="CNIC"></label>
+                <input asp-for="CNIC" class="form-control" />
+            </div>
+
+            <!-- Address & Education -->
+            <div class="mb-3">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Education"></label>
+                <select asp-for="Education" class="form-control">
+                    <option value="">Select Education Level</option>
+                    <option value="matric">Matriculation</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="bachelor">Bachelor's Degree</option>
+                    <option value="master">Master's Degree</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <!-- Field -->
+            <div class="mb-3">
+                <label asp-for="FieldId">Service Field</label>
+                <select asp-for="FieldId" asp-items="ViewBag.Fields" class="form-control">
+                    <option value="">Select Your Field</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="addmorefield">Other Field</label>
+                <input asp-for="addmorefield" class="form-control" />
+            </div>
+
+            <!-- Experience -->
+            <div class="mb-3">
+                <label asp-for="Experience"></label>
+                <input asp-for="Experience" class="form-control" />
+            </div>
+
+            <!-- Headline & About -->
+            <div class="mb-3">
+                <label asp-for="Headline"></label>
+                <input asp-for="Headline" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="About"></label>
+                <textarea asp-for="About" class="form-control"></textarea>
+            </div>
+
+            <!-- Skills -->
+            <div class="mb-3">
+                <label asp-for="Skills"></label>
+                <input asp-for="Skills" class="form-control" placeholder="e.g. Plumber, Electrician, Welder" />
+            </div>
+
+            <!-- Facebook -->
+            <div class="mb-3">
+                <label asp-for="FacebookUrl"></label>
+                <input asp-for="FacebookUrl" class="form-control" />
+            </div>
+
+            <!-- File Uploads -->
+            <div class="mb-3">
+                <label>Profile Image</label>
+                <input type="file" name="profileImage" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label>Cover Image</label>
+                <input type="file" name="coverImage" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label>Upload CV (PDF only)</label>
+                <input type="file" name="cv" class="form-control" />
+            </div>
+
+            <!-- Status -->
+            <div class="mb-3">
+                <label asp-for="Status"></label>
+                <select asp-for="Status" class="form-select">
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+            </div>
+
+            <!-- Feedback -->
+            <div class="mb-3">
+                <label asp-for="Feedback"></label>
+                <textarea asp-for="Feedback" class="form-control"></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-success">💾 Save Changes</button>
+            <a asp-action="ViewProfile" asp-route-id="@Model.ApproveLarberId" class="btn btn-secondary">⬅ Back</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

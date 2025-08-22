@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Labour Panel @ViewData["Title"].</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f8f9fa !important;
+    }
+    .sidebar {
+      background-color: #343a40;
+      color: white;
+      padding: 20px;
+      min-height: 100vh; /* ✅ full height */
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 15px 0;
+    }
+    .sidebar a:hover {
+      color: #ffc107;
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: #ffc107;
+    }
+    .content {
+      padding: 30px;
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+    /* Offcanvas Sidebar Full Height */
+    .offcanvas-body.sidebar {
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar (Mobile Toggle Button) -->
+<nav class="navbar navbar-dark bg-dark d-md-none">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">FixAll</a>
+    <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+      ☰
+    </button>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar (Desktop) -->
+    <div class="col-md-3 col-lg-2 d-none d-md-block sidebar">
+      <div class="logo mb-4">FixAll</div>
+      <h4>Dashboard</h4>
+      <a asp-controller="laberpanel" asp-action="Index">🏠 Home</a>
+                <a asp-controller="laberpanel" asp-action="viewprofile">👨🏻‍💼 Update profile </a>
+                <a asp-controller="laberpanel" asp-action="userpanelviewprofile">👨🏻‍💼 View profile </a>
+      <a href="#">👷 Labour Panel</a>
+      <a href="#">🧾 Reports</a>
+      <a href="#">⚙️ Settings</a>
+      <a asp-controller="laberpanel" asp-action="Logout">➜] Logout</a>
+    </div>
+
+    <!-- Offcanvas Sidebar (Mobile) -->
+    <div class="offcanvas offcanvas-start bg-dark text-white h-100" tabindex="-1" id="sidebarMenu">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title logo">FixAll</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body sidebar">
+        <h4>Dashboard</h4>
+        <a asp-controller="laberpanel" asp-action="index">🏠 Home</a>
+                    <a asp-controller="laberpanel" asp-action="viewprofile">👨🏻‍💼 Update profile </a>
+
+                    <a asp-controller="laberpanel" asp-action="userpanelviewprofile">👨🏻‍💼 View profile</a>
+        <a href="#">👷 Labour Panel</a>
+        <a href="#">🧾 Reports</a>
+        <a href="#">⚙️ Settings</a>
+        <a asp-controller="laberpanel" asp-action="Logout">➜] Logout</a>
+      </div>
+    </div>
+            <div class="col-md-9 col-lg-10 content">
+            @RenderBody()
+            </div>
+
+
+            <!-- Bootstrap JS Bundle -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+            <!-- Add Labour Script -->
+            <script>
+                let labourCount = 3;
+
+                document.getElementById("labourForm").addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById("labourName").value;
+                    const role = document.getElementById("labourRole").value;
+                    const shift = document.getElementById("labourShift").value;
+                    const hours = document.getElementById("labourHours").value;
+                    const statusValue = document.getElementById("labourStatus").value;
+
+                    let statusText = "";
+                    if (statusValue === "success") statusText = "Present";
+                    else if (statusValue === "warning") statusText = "Late";
+                    else statusText = "Absent";
+
+                    labourCount++;
+                    const tableBody = document.getElementById("labourTableBody");
+                    const newRow = document.createElement("tr");
+                    newRow.innerHTML = `
+                      <td>${labourCount}</td>
+                      <td>${name}</td>
+                      <td>${role}</td>
+                      <td>${shift}</td>
+                      <td>${hours}</td>
+                      <td><span class="badge bg-${statusValue}">${statusText}</span></td>
+                    `;
+                    tableBody.appendChild(newRow);
+
+                    document.getElementById("labourForm").reset();
+
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addLabourModal'));
+                    modal.hide();
+                });
+            </script>
+            @RenderSection("Scripts", required: false)
+
+</body>
+</html>

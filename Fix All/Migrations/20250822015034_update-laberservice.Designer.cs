@@ -4,6 +4,7 @@ using Fix_All.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fix_All.Migrations
 {
     [DbContext(typeof(mydbcontext))]
-    partial class mydbcontextModelSnapshot : ModelSnapshot
+    [Migration("20250822015034_update-laberservice")]
+    partial class updatelaberservice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,10 +103,6 @@ namespace Fix_All.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ApproveLarberId"));
 
-                    b.Property<string>("About")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -113,9 +112,6 @@ namespace Fix_All.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CVFilePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CoverImagePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Education")
@@ -131,9 +127,6 @@ namespace Fix_All.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("FacebookUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Feedback")
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
@@ -147,10 +140,6 @@ namespace Fix_All.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Headline")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<bool>("IsDiploma")
                         .HasColumnType("bit");
 
@@ -158,9 +147,6 @@ namespace Fix_All.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("LinkedInUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -170,15 +156,8 @@ namespace Fix_All.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PortfolioUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ProfileImagePath")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Skills")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -186,6 +165,7 @@ namespace Fix_All.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("addmorefield")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ApproveLarberId");

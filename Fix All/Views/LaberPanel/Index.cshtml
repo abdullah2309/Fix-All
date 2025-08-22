@@ -1,0 +1,18 @@
+﻿@model Fix_All.Models.approve_laber
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_labar_panel.cshtml";
+}
+<h2> wellcome </h2>
+
+
+
+<h2>Welcome, @Model.FirstName @Model.LastName</h2>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Phone:</strong> @Model.Phone</p>
+<p><strong>CNIC:</strong> @Model.CNIC</p>
+<p><strong>Address:</strong> @Model.Address</p>
+<p><strong>Experience:</strong> @Model.Experience</p>
+<p><strong>Skills:</strong> @Model.Skills</p>
+
+<a asp-action="Logout" class="btn btn-danger">Logout</a>
