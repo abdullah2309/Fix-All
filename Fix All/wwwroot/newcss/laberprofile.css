@@ -1,0 +1,243 @@
+﻿
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: #f3f2ef;
+    color: rgba(0, 0, 0, 0.9);
+    line-height: 1.5;
+}
+
+.cover {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(45deg, #0077b5, #00a0dc);
+    position: relative;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.profile-img {
+    position: absolute;
+    bottom: -70px;
+    left: 30px;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    background: #fff;
+    box-shadow: 0 0 0 2px #fff, 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: 90px auto 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.profile-header {
+    padding: 20px 25px 15px;
+    position: relative;
+}
+
+.profile-actions {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.primary-btn {
+    background: #0a66c2;
+    color: white;
+    border: none;
+}
+
+.secondary-btn {
+    background: transparent;
+    color: #0a66c2;
+    border: 1px solid #0a66c2;
+}
+
+.more-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: #f0f0f0;
+    color: #666;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.headline {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.location {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.connections {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.links {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+    .links a {
+        color: #0a66c2;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+.section {
+    padding: 15px 25px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.skill {
+    background: #e8f3ff;
+    color: #0a66c2;
+    padding: 5px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.experience-item, .education-item {
+    margin-bottom: 15px;
+}
+
+.exp-title, .edu-degree {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.exp-company, .edu-school {
+    font-weight: 600;
+    font-size: 14px;
+    color: #666;
+}
+
+.exp-duration, .edu-duration {
+    font-size: 14px;
+    color: #666;
+    margin-top: 2px;
+}
+
+.exp-description {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #0a66c2;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+    .btn:hover {
+        background: #004182;
+    }
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .profile-actions {
+        position: static;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+    .cover {
+        height: 150px;
+    }
+
+    .profile-img {
+        width: 120px;
+        height: 120px;
+        bottom: -60px;
+        left: 20px;
+    }
+
+    .container {
+        margin-top: 70px;
+    }
+}

@@ -8,5 +8,9 @@ namespace Fix_All.Controllers
         {
             return View();
         }
+        public IActionResult viewprofile()
+        {
+            return View();
+        }
     }
 }
