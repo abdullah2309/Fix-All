@@ -90,7 +90,8 @@ namespace Fix_All.Controllers
             int? laborId = HttpContext.Session.GetInt32("LaberId");
             if (laborId == null)
             {
-                return RedirectToAction("LaborSignin", "Account");
+                return RedirectToAction("laber_panel_Login");
+
             }
 
             var labor = _context.approve_labers
