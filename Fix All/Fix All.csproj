@@ -37,6 +37,7 @@
     <Folder Include="wwwroot\lib\jquery\dist\" />
     <Folder Include="wwwroot\uploads\images\" />
     <Folder Include="wwwroot\uploads\cv\" />
+    <Folder Include="wwwroot\uploads\cover\" />
     <Folder Include="wwwroot\uploads\profile\" />
   </ItemGroup>
 

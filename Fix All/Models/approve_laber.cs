@@ -47,8 +47,8 @@ namespace Fix_All.Models
         [StringLength(50, ErrorMessage = "Experience text cannot exceed 50 characters")]
         public string Experience { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
-        [MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
+        //[Required(ErrorMessage = "Password is required")]
+        //[MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
         public string PasswordHash { get; set; }
 
         // ✅ File paths
