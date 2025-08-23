@@ -85,7 +85,20 @@ namespace Fix_All.Controllers
         }
         public IActionResult userpanelviewprofile()
         {
-            return View();
+            int? laborId = HttpContext.Session.GetInt32("LaberId");
+
+            if (laborId == null)
+            {
+                return RedirectToAction("laber_panel_Login"); // if not logged in
+            }
+
+            var labor = _context.approve_labers
+                .Include(l => l.LaborField)
+                .FirstOrDefault(l => l.ApproveLarberId == laborId);
+
+            if (labor == null) return NotFound();
+
+            return View("UserPanelViewProfile", labor);
         }
         // ---------------------------
         // View Profile

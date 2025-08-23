@@ -47,10 +47,7 @@
             <p><strong>CNIC:</strong> @Model.CNIC</p>
             <p><strong>Education:</strong> @Model.Education</p>
             <p><strong>Experience:</strong> @Model.Experience</p>
-            <p>
-                <strong>Status:</strong>
-                <span class="badge bg-secondary">@Model.Status</span>
-            </p>
+           
         </div>
 
         <!-- Social Links -->
@@ -75,15 +72,7 @@
             }
         </div>
 
-        <!-- CV Download -->
-        @if (!string.IsNullOrEmpty(Model.CVFilePath))
-        {
-            <div class="mt-3">
-                <a href="@Model.CVFilePath" class="btn btn-success btn-sm" target="_blank">
-                    📄 Download CV
-                </a>
-            </div>
-        }
+       
 
         <!-- Edit Button -->
         <a asp-action="EditProfile" asp-route-id="@Model.ApproveLarberId"
