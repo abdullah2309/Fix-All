@@ -12,8 +12,8 @@
         <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="ApproveLarberId" />
 
-            <!-- ✅ Show all validation errors together -->
-            <div asp-validation-summary="All" class="alert alert-danger"></div>
+            <!-- ✅ Show all validation errors together alert-danger -->
+            <div asp-validation-summary="All" class="alert "></div>
 
             <!-- First Name + Last Name -->
             <div class="row">
@@ -36,9 +36,9 @@
                 <label asp-for="Phone"></label>
                 <input asp-for="Phone" class="form-control" />
             </div>
-            <div class="mb-3">
-                <label asp-for="CNIC"></label>
-                <input asp-for="CNIC" class="form-control" />
+            <div class="mb-3" >
+                <label></label>
+                <input asp-for="CNIC" class="form-control" type="hidden" />
             </div>
 
             <!-- Address & Education -->
@@ -109,26 +109,24 @@
                 <input type="file" name="coverImage" class="form-control" />
             </div>
             <div class="mb-3">
-                <label>Upload CV (PDF only)</label>
-                <input type="file" name="cv" class="form-control" />
+                <label></label>
+                <input type="hidden" name="cv" class="form-control" />
             </div>
 
-            <!-- Status -->
+            <input asp-for="Status" type="hidden" value="Approved" />
+
+            <!-- Status
             <div class="mb-3">
-                <label asp-for="Status"></label>
-                <select asp-for="Status" class="form-select">
+                <label></label>
+                <select asp-for="Status" type="hidden" class="form-select">
                     <option value="Pending">Pending</option>
                     <option value="Approved">Approved</option>
                     <option value="Rejected">Rejected</option>
                 </select>
             </div>
+             -->
 
-            <!-- Feedback -->
-            <div class="mb-3">
-                <label asp-for="Feedback"></label>
-                <textarea asp-for="Feedback" class="form-control"></textarea>
-            </div>
-
+           
             <!-- Submit -->
             <button type="submit" class="btn btn-success">💾 Save Changes</button>
             <a asp-action="ViewProfile" asp-route-id="@Model.ApproveLarberId" class="btn btn-secondary">⬅ Back</a>

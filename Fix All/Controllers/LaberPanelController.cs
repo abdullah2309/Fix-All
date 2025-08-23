@@ -50,12 +50,17 @@ namespace Fix_All.Controllers
 
             if (user != null)
             {
+                // ✅ Update status to Online
+                user.OnlineStatus = "Online";
+                _context.SaveChanges();
+
                 // ✅ Set session
                 HttpContext.Session.SetInt32("LaberId", user.ApproveLarberId);
                 HttpContext.Session.SetString("LaberName", user.FirstName + " " + user.LastName);
                 HttpContext.Session.SetString("LaberEmail", user.Email);
+                HttpContext.Session.SetString("OnlineStatus", "Online");
 
-                return RedirectToAction("index");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -63,6 +68,7 @@ namespace Fix_All.Controllers
                 return View();
             }
         }
+
 
         public IActionResult Index()
         {
@@ -79,7 +85,20 @@ namespace Fix_All.Controllers
         }
         public IActionResult userpanelviewprofile()
         {
-            return View();
+            int? laborId = HttpContext.Session.GetInt32("LaberId");
+
+            if (laborId == null)
+            {
+                return RedirectToAction("laber_panel_Login"); // if not logged in
+            }
+
+            var labor = _context.approve_labers
+                .Include(l => l.LaborField)
+                .FirstOrDefault(l => l.ApproveLarberId == laborId);
+
+            if (labor == null) return NotFound();
+
+            return View("UserPanelViewProfile", labor);
         }
         // ---------------------------
         // View Profile
@@ -253,8 +272,21 @@ namespace Fix_All.Controllers
         }
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear();
+            int? laborId = HttpContext.Session.GetInt32("LaberId");
+
+            if (laborId != null)
+            {
+                var user = _context.approve_labers.Find(laborId);
+                if (user != null)
+                {
+                    user.OnlineStatus = "Offline";
+                    _context.SaveChanges();
+                }
+            }
+
+            HttpContext.Session.Clear(); // ✅ Clear session
             return RedirectToAction("laber_panel_Login");
         }
+
     }
 }

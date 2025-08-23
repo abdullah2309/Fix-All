@@ -27,12 +27,58 @@ namespace Fix_All.Controllers
             _configuration = configuration;
         }
 
-        public IActionResult Index() => View();
+        public IActionResult Index()
+        {
+            var labors = _context.approve_labers.ToList();
+            return View(labors);
+        }
+        public IActionResult Labers(int? fieldId, string searchTerm)
+        {
+            var labors = _context.approve_labers
+                .Where(l => l.Status == "Approved" && l.OnlineStatus == "Online")
+                .AsQueryable();
+
+            // ✅ Filter by Category
+            if (fieldId.HasValue && fieldId.Value > 0)
+            {
+                labors = labors.Where(l => l.FieldId == fieldId.Value);
+            }
+
+            // ✅ Filter by Search Term
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                labors = labors.Where(l =>
+                    l.FirstName.Contains(searchTerm) ||
+                    l.LastName.Contains(searchTerm) ||
+                    l.Headline.Contains(searchTerm)
+                );
+            }
+
+            // Pass Data to View
+            ViewBag.Fields = _context.LaborFields.ToList();
+            ViewBag.SelectedFieldId = fieldId ?? 0;
+            ViewBag.SearchTerm = searchTerm; // Keep typed text in search box
+
+            return View(labors.ToList());
+        }
+
         public IActionResult About() => View();
         public IActionResult Services() => View();
         public IActionResult Contact() => View();
         public IActionResult Signin() => View();
         public IActionResult applynow() => View();
+        public IActionResult LaborProfile(int id)
+        {
+            var labor = _context.approve_labers
+                                .FirstOrDefault(l => l.ApproveLarberId == id);
+
+            if (labor == null)
+            {
+                return NotFound();
+            }
+
+            return View(labor);
+        }
 
         [HttpGet]
         public IActionResult LaborSignin()
@@ -126,6 +172,14 @@ namespace Fix_All.Controllers
                     Text = f.FieldName
                 }).ToList();
         }
+        public IActionResult _LaborProfileCard() 
+        {
+            return View();
+        }
+
+
+
+
 
     }
 }
