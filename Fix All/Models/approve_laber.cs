@@ -88,5 +88,11 @@ namespace Fix_All.Models
         public string? FacebookUrl { get; set; }
         [Url]
         public string? PortfolioUrl { get; set; }
+
+        // Online/Offline Status
+        [Required]
+        [MaxLength(10)]
+        public string OnlineStatus { get; set; } = "Offline";
+
     }
 }
