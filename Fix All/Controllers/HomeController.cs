@@ -126,6 +126,14 @@ namespace Fix_All.Controllers
                     Text = f.FieldName
                 }).ToList();
         }
+        public IActionResult _LaborProfileCard() 
+        {
+            return View();
+        }
+
+
+
+
 
     }
 }
