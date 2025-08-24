@@ -34,33 +34,50 @@ namespace Fix_All.Controllers
         }
         public IActionResult Labers(int? fieldId, string searchTerm)
         {
-            var labors = _context.approve_labers
+            var onlineLabors = _context.approve_labers
                 .Where(l => l.Status == "Approved" && l.OnlineStatus == "Online")
+                .AsQueryable();
+
+            var offlineLabors = _context.approve_labers
+                .Where(l => l.Status == "Approved" && l.OnlineStatus == "Offline")
                 .AsQueryable();
 
             // ✅ Filter by Category
             if (fieldId.HasValue && fieldId.Value > 0)
             {
-                labors = labors.Where(l => l.FieldId == fieldId.Value);
+                onlineLabors = onlineLabors.Where(l => l.FieldId == fieldId.Value);
+                offlineLabors = offlineLabors.Where(l => l.FieldId == fieldId.Value);
             }
 
-            // ✅ Filter by Search Term
+            // ✅ Search by Name, Headline, Skills, AddMoreField
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                labors = labors.Where(l =>
+                onlineLabors = onlineLabors.Where(l =>
                     l.FirstName.Contains(searchTerm) ||
                     l.LastName.Contains(searchTerm) ||
-                    l.Headline.Contains(searchTerm)
+                    l.Headline.Contains(searchTerm) ||
+                    l.Skills.Contains(searchTerm) ||                // 👈 skills search
+                    l.addmorefield.Contains(searchTerm)             // 👈 addmorefield search
+                );
+
+                offlineLabors = offlineLabors.Where(l =>
+                    l.FirstName.Contains(searchTerm) ||
+                    l.LastName.Contains(searchTerm) ||
+                    l.Headline.Contains(searchTerm) ||
+                    l.Skills.Contains(searchTerm) ||
+                    l.addmorefield.Contains(searchTerm)
                 );
             }
 
-            // Pass Data to View
+            // ✅ Pass data to View
             ViewBag.Fields = _context.LaborFields.ToList();
             ViewBag.SelectedFieldId = fieldId ?? 0;
-            ViewBag.SearchTerm = searchTerm; // Keep typed text in search box
+            ViewBag.SearchTerm = searchTerm;
+            ViewBag.OfflineLabors = offlineLabors.ToList();
 
-            return View(labors.ToList());
+            return View(onlineLabors.ToList());
         }
+
 
         public IActionResult About() => View();
         public IActionResult Services() => View();
@@ -172,7 +189,11 @@ namespace Fix_All.Controllers
                     Text = f.FieldName
                 }).ToList();
         }
-        public IActionResult _LaborProfileCard() 
+        public IActionResult _LaborProfileCard()
+        {
+            return View();
+        }
+        public IActionResult _LaborProfileCard2()
         {
             return View();
         }

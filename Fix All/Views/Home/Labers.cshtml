@@ -27,12 +27,13 @@
         </select>
     </div>
 
-    <div class="col-md-6">
-        <input type="text" name="searchTerm"
-               value="@ViewBag.SearchTerm"
-               class="form-control"
-               placeholder="Search labor by name or skill..." />
-    </div>
+<div class="col-md-6">
+    <input type="text" name="searchTerm"
+           value="@ViewBag.SearchTerm"
+           class="form-control"
+           placeholder="Search labor by name, skill or field (e.g. fitter)..." />
+</div>
+
 
     <div class="col-md-2">
         <button type="submit" class="btn btn-primary w-100">Search</button>
@@ -46,11 +47,24 @@
             <h1 class="mb-5">Meet the Heroes Behind the Wrenches</h1>
         </div>
 
-        <div class="row">
-            @foreach (var labor in Model)
+       <div class="row">
+    <h2>Online Labors</h2>
+            @foreach (var labor in Model)  @* Model = Online *@
             {
                 @await Html.PartialAsync("_LaborProfileCard", labor)
             }
-        </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <h2>Offline Labors</h2>
+            @foreach (var labor in (List<Fix_All.Models.approve_laber>)ViewBag.OfflineLabors)
+            {
+                @await Html.PartialAsync("_LaborProfileCard2", labor)
+            }
+</div>
+
+
     </div>
 </div>
