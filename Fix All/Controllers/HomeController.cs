@@ -82,6 +82,21 @@ namespace Fix_All.Controllers
         public IActionResult About() => View();
         public IActionResult Services() => View();
         public IActionResult Contact() => View();
+        [HttpPost]
+        public IActionResult Contact(Contact model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Contacts.Add(model);
+                _context.SaveChanges();
+
+                TempData["Success"] = "Your message has been sent successfully!";
+                return RedirectToAction("Contact");
+            }
+
+            return View(model);
+        }
+
         public IActionResult Signin() => View();
         public IActionResult applynow() => View();
         public IActionResult LaborProfile(int id)

@@ -21,6 +21,13 @@ namespace Fix_All.Controllers
             return View();
         }
 
+        public IActionResult Messages()
+        {
+            var messages = _context.Contacts
+                .OrderByDescending(c => c.CreatedAt)
+                .ToList();
+            return View(messages);
+        }
 
         public async Task<IActionResult> applyforlabar()
         {

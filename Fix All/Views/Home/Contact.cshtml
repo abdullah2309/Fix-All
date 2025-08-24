@@ -35,8 +35,15 @@
             <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
 
 
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["Success"]
+                    </div>
+                }
+
                 <div class="bg-light p-5 h-100 d-flex align-items-center">
-                    <form asp-action="Index" asp-controller="Contact" method="post">
+                    <form asp-action="Contact" asp-controller="Home" method="post">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">

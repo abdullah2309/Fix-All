@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Fix_All.Models.Contact>
+
+@{
+    Layout = "~/Views/Shared/_Admin_layout.cshtml";
+    ViewData["Title"] = "Contact Messages";
+}
+
+<div class="card shadow-sm p-3">
+    <h2 class="mb-3">Contact Messages</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No messages found.</div>
+    }
+    else
+    {
+        <!-- Top Scrollbar -->
+        <div id="top-scroll" style="overflow-x:auto; height:16px;">
+            <div style="height:1px;"></div>
+        </div>
+
+        <!-- Main Scroll Wrapper -->
+        <div id="main-scroll" style="overflow-x:auto; max-height:500px;">
+            <table class="table table-hover table-bordered text-dark">
+                <thead class="table-dark sticky-header">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@item.Email</td>
+                            <td>@item.Subject</td>
+                            <td style="max-width:400px; white-space:normal;">@item.Message</td>
+                            <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<style>
+    /* Table formatting */
+    .table td, .table th {
+        color: black !important;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    /* Wrap long messages */
+    .table td:nth-child(5) {
+        white-space: normal !important;
+    }
+
+    /* Sticky header */
+    .sticky-header th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #212529;
+        color: #fff !important;
+    }
+</style>
