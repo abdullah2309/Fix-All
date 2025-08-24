@@ -32,24 +32,35 @@ namespace Fix_All.Controllers
             var labors = _context.approve_labers.ToList();
             return View(labors);
         }
-        public IActionResult Labers(int? fieldId)
+        public IActionResult Labers(int? fieldId, string searchTerm)
         {
             var labors = _context.approve_labers
                 .Where(l => l.Status == "Approved" && l.OnlineStatus == "Online")
                 .AsQueryable();
 
+            // ✅ Filter by Category
             if (fieldId.HasValue && fieldId.Value > 0)
             {
                 labors = labors.Where(l => l.FieldId == fieldId.Value);
             }
 
-            // Categories + selected id ViewBag में भेजें
+            // ✅ Filter by Search Term
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                labors = labors.Where(l =>
+                    l.FirstName.Contains(searchTerm) ||
+                    l.LastName.Contains(searchTerm) ||
+                    l.Headline.Contains(searchTerm)
+                );
+            }
+
+            // Pass Data to View
             ViewBag.Fields = _context.LaborFields.ToList();
-            ViewBag.SelectedFieldId = fieldId ?? 0; // अगर null है तो 0 रख दो
+            ViewBag.SelectedFieldId = fieldId ?? 0;
+            ViewBag.SearchTerm = searchTerm; // Keep typed text in search box
 
             return View(labors.ToList());
         }
-
 
         public IActionResult About() => View();
         public IActionResult Services() => View();

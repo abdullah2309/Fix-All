@@ -3,12 +3,7 @@
     ViewData["Title"] = "Home";
 }
 
-<div class="row">
-    @foreach (var labor in Model.Where(l => l.OnlineStatus == "Online"))
-    {
-        @await Html.PartialAsync("_LaborProfileCard", labor)
-    }
-</div>
+
 
 
 <!-- Hero Section Start -->
