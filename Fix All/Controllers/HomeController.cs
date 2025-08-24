@@ -27,12 +27,47 @@ namespace Fix_All.Controllers
             _configuration = configuration;
         }
 
-        public IActionResult Index() => View();
+        public IActionResult Index()
+        {
+            var labors = _context.approve_labers.ToList();
+            return View(labors);
+        }
+        public IActionResult Labers(int? fieldId)
+        {
+            var labors = _context.approve_labers
+                .Where(l => l.Status == "Approved" && l.OnlineStatus == "Online")
+                .AsQueryable();
+
+            if (fieldId.HasValue && fieldId.Value > 0)
+            {
+                labors = labors.Where(l => l.FieldId == fieldId.Value);
+            }
+
+            // Categories + selected id ViewBag में भेजें
+            ViewBag.Fields = _context.LaborFields.ToList();
+            ViewBag.SelectedFieldId = fieldId ?? 0; // अगर null है तो 0 रख दो
+
+            return View(labors.ToList());
+        }
+
+
         public IActionResult About() => View();
         public IActionResult Services() => View();
         public IActionResult Contact() => View();
         public IActionResult Signin() => View();
         public IActionResult applynow() => View();
+        public IActionResult LaborProfile(int id)
+        {
+            var labor = _context.approve_labers
+                                .FirstOrDefault(l => l.ApproveLarberId == id);
+
+            if (labor == null)
+            {
+                return NotFound();
+            }
+
+            return View(labor);
+        }
 
         [HttpGet]
         public IActionResult LaborSignin()

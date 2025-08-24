@@ -1,4 +1,24 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Fix_All.Models.approve_laber
+<div class="row g-4">
+    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="team-item">
+            <div class="position-relative overflow-hidden">
+                <img class="img-fluid" src="@(Model.ProfileImagePath ?? "/images/default-profile.png")" alt="@Model.FirstName @Model.LastName">
+            </div>
+            <div class="team-text">
+                <div class="bg-light">
+                    <h5 class="fw-bold mb-0">@Model.FirstName @Model.LastName</h5>
+                    <small>@(Model.Headline ?? "Labor Worker") , @(Model.Experience) Experience.</small>
+                </div>
+                <div class="bg-primary text-center">
+                    <a asp-action="LaborProfile"
+                       asp-controller="home"
+                       asp-route-id="@Model.ApproveLarberId"
+                       class="btn btn-light btn-sm mt-2">
+                        View Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
