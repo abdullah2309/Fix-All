@@ -98,6 +98,46 @@ namespace Fix_All.Controllers
         }
 
         public IActionResult Signin() => View();
+        [HttpPost]
+        public IActionResult SignUp(UserAccount model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.UserAccounts.Add(model);
+                _context.SaveChanges();
+                TempData["Message"] = "Account created successfully!";
+                return RedirectToAction("SignIn");
+            }
+            TempData["Error"] = "Something went wrong!";
+            return RedirectToAction("SignUp");
+        }
+
+        [HttpPost]
+        public IActionResult SignIn(UserAccount model)
+        {
+            var user = _context.UserAccounts
+                .FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
+
+            if (user != null)
+            {
+                // ✅ Session set karna
+                HttpContext.Session.SetString("UserName", user.FullName);
+                HttpContext.Session.SetInt32("UserId", user.Id);
+
+                TempData["Message"] = "Login Successful!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            TempData["Error"] = "Invalid Email or Password!";
+            return RedirectToAction("SignIn");
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear(); // ✅ sab session clear
+            return RedirectToAction("index", "Home");
+        }
+
+
         public IActionResult applynow() => View();
         public IActionResult LaborProfile(int id)
         {

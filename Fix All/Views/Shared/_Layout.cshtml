@@ -1,5 +1,5 @@
-﻿
-
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 <html lang="en">
 
@@ -106,11 +106,26 @@
                 </div>
 
                 <!-- LOGIN / SIGN IN on the right -->
-                <div class="d-flex">
-                    <a asp-action="applynow" class="btn btn-outline-primary me-2">Apple for a Labor</a>
-                    <a asp-action="Signin" asp-controller="Home" class="btn btn-primary">Sign In</a>
+                @if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link nav-link">Welcome, @HttpContextAccessor.HttpContext.Session.GetString("UserName")</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link" asp-action="Logout" asp-controller="Home">Logout</a>
+                    </li>
+                }
+                else
+                {
+                    <div class="d-flex">
+                        <a asp-action="applynow" class="btn btn-outline-primary me-2">Apple for a Labor</a>
+                        <a asp-action="Signin" asp-controller="Home" class="btn btn-primary">Sign In</a>
+                    </div>
+                }
+
                
-                </div>
+
+
             </div>
         </nav>
     </div>
