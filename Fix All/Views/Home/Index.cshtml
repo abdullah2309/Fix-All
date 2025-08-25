@@ -3,6 +3,21 @@
     ViewData["Title"] = "Home";
 }
 
+<script>
+    @if (TempData["Message"] != null)
+    {
+        <text>
+                alert("@TempData["Message"]");
+        </text>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <text>
+                alert("@TempData["Error"]");
+        </text>
+    }
+</script>
 
 
 

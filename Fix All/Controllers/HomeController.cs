@@ -124,7 +124,7 @@ namespace Fix_All.Controllers
                 HttpContext.Session.SetString("UserName", user.FullName);
                 HttpContext.Session.SetInt32("UserId", user.Id);
 
-                TempData["Message"] = "Login Successful!";
+                
                 return RedirectToAction("Index", "Home");
             }
 

@@ -13,22 +13,27 @@ namespace Fix_All.Controllers
         {
             _context = context;
         }
-
-
-        // GET
         [HttpGet]
         public IActionResult Create(int laborId)
         {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+            {
+                TempData["Error"] = "⚠️ Please login to continue.";
+                return RedirectToAction("Signin", "Home");
+            }
+
             var labor = _context.approve_labers
                 .FirstOrDefault(l => l.ApproveLarberId == laborId && l.Status == "Approved");
 
             if (labor == null)
             {
-                TempData["Error"] = "Labor not found or not approved.";
+                TempData["Error"] = "❌ Labor not found or not approved.";
                 return RedirectToAction("Labers", "Home"); // User panel page
             }
 
-            // Safe to access labor properties now
+            // Safe to access labor properties
             ViewBag.LaborStatus = labor.OnlineStatus;
             ViewBag.LaborName = labor.FirstName + " " + labor.LastName;
             ViewBag.Fields = _context.LaborFields.ToList();
@@ -38,57 +43,42 @@ namespace Fix_All.Controllers
         }
 
 
-        // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(BookNow booking)
         {
-            // Get logged-in user ID from session (must be set at login)
             int? userId = HttpContext.Session.GetInt32("UserId");
 
             if (userId == null)
             {
-                TempData["Error"] = "You must be logged in to book a labor.";
-                return RedirectToAction("SignIn", "Home");
+                TempData["Error"] = "⚠️ You must be logged in to book a labor.";
+                return RedirectToAction("Signin", "Home");
             }
 
-            // Assign user ID from session
             booking.UserId = userId.Value;
-
-            // Ensure booking status is Pending
             booking.Status = "Pending";
 
-            
-                // Add booking to database
-                _context.BookNow.Add(booking);
-                _context.SaveChanges();
+            _context.BookNow.Add(booking);
+            _context.SaveChanges();
 
-                TempData["Message"] = "Booking request sent successfully!";
-                return RedirectToAction("Success");
-            //}
+            // Message bhej do Index page ke liye
+            TempData["Message"] = "✅ Booking request sent successfully!";
 
-            //// If validation fails, reload form with fields
-            //ViewBag.Fields = _context.LaborFields.ToList();
-            //return View(booking);
+            return RedirectToAction("Index", "Home"); // 👈 Index page par bhej do
         }
 
-        // Success page
-        public IActionResult Success()
-        {
-            return View();
-        }
 
         //// Admin Approval
-        //public IActionResult Manage()
-        //{
-        //    var bookings = _context.BookNow
-        //        .Include(b => b.UserAccount)
-        //        .Include(b => b.ApproveLaber)
-        //        .Include(b => b.LaborFields)
-        //        .ToList();
+        public IActionResult Manage()
+        {
+            var bookings = _context.BookNow
+                .Include(b => b.UserAccount)
+                .Include(b => b.ApproveLaber)
+                .Include(b => b.LaborField)
+                .ToList();
 
-        //    return View(bookings);
-        //}
+            return View(bookings);
+        }
 
         public IActionResult Approve(int id)
         {

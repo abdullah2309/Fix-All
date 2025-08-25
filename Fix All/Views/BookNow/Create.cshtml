@@ -2,57 +2,73 @@
 @{
     ViewData["Title"] = "Book Now";
 }
+<br>
+<br>
+<br>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 600px; border-radius: 12px;">
+        <h2 class="mb-4 text-center">Book Now</h2>
 
-<h2>Book Now</h2>
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
 
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
+            <!-- Hidden LaborId -->
+            <input type="hidden" asp-for="ApproveLarberId" value="@ViewBag.LaborId" />
 
-<form asp-action="Create" method="post">
-    @Html.AntiForgeryToken()
+            <div class="form-group mb-3">
+                <label class="form-label">Labor Name</label>
+                <input type="text" class="form-control" value="@ViewBag.LaborName" readonly />
+            </div>
 
-    <!-- Hidden field for ApproveLarberId -->
-    <input type="hidden" asp-for="ApproveLarberId" value="@ViewBag.LaborId" />
+            <div class="form-group mb-3">
+                <label asp-for="FieldId" class="form-label"></label>
+                <select asp-for="FieldId" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Fields, "FieldId", "FieldName"))" required>
+                    <option value="">-- Select Field --</option>
+                </select>
+            </div>
 
-    <!-- Labor Name Display (readonly) -->
-    <div class="form-group mb-3">
-        <label>Labor Name</label>
-        <input type="text" class="form-control" value="@ViewBag.LaborName" readonly />
+            <div class="form-group mb-3">
+                <label asp-for="ServiceAddress" class="form-label"></label>
+                <input asp-for="ServiceAddress" class="form-control"
+                       placeholder="Enter service address" required />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="AddMorefield" class="form-label"></label>
+                <input asp-for="AddMorefield" class="form-control"
+                       placeholder="Enter extra field (optional)" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ServiceDate" class="form-label"></label>
+                <input asp-for="ServiceDate" type="date" class="form-control" required />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Notes" class="form-label"></label>
+                <textarea asp-for="Notes" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Book Now</button>
+        </form>
     </div>
+</div>
 
-    <!-- Service Field Dropdown -->
-    <div class="form-group mb-3">
-        <label>Service Field</label>
-        <select asp-for="FieldId" class="form-control" asp-items="@(new SelectList(ViewBag.Fields, "FieldId", "FieldName"))">
-            <option value="">-- Select Field --</option>
-        </select>
-        <span asp-validation-for="FieldId" class="text-danger"></span>
-    </div>
+<script>
+    // Success Message
+    @if (TempData["Message"] != null)
+    {
+        <text>
+                alert("@TempData["Message"]");
+        </text>
+    }
 
-    <!-- Service Address -->
-    <div class="form-group mb-3">
-        <label>Service Address</label>
-        <input asp-for="ServiceAddress" class="form-control" placeholder="Enter service address" />
-        <span asp-validation-for="ServiceAddress" class="text-danger"></span>
-    </div>
-
-    <!-- Service Date -->
-    <div class="form-group mb-3">
-        <label>Service Date</label>
-        <input asp-for="ServiceDate" type="date" class="form-control" />
-        <span asp-validation-for="ServiceDate" class="text-danger"></span>
-    </div>
-
-    <!-- Notes -->
-    <div class="form-group mb-3">
-        <label>Notes (Optional)</label>
-        <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Additional details..."></textarea>
-        <span asp-validation-for="Notes" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Book Now</button>
-</form>
-
-}
+        // Error Message
+    @if (TempData["Error"] != null)
+    {
+        <text>
+                alert("@TempData["Error"]");
+        </text>
+    }
+</script>
