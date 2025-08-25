@@ -4,6 +4,7 @@ using Fix_All.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fix_All.Migrations
 {
     [DbContext(typeof(mydbcontext))]
-    partial class mydbcontextModelSnapshot : ModelSnapshot
+    [Migration("20250825054754_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace Fix_All.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Fix_All.Models.BookNow", b =>
+            modelBuilder.Entity("BookNow", b =>
                 {
                     b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
@@ -30,19 +33,11 @@ namespace Fix_All.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
 
-                    b.Property<string>("AddMorefield")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
                     b.Property<int>("ApproveLarberId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("FieldId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Notes")
                         .HasMaxLength(500)
@@ -67,8 +62,6 @@ namespace Fix_All.Migrations
                     b.HasKey("BookingId");
 
                     b.HasIndex("ApproveLarberId");
-
-                    b.HasIndex("FieldId");
 
                     b.HasIndex("UserId");
 
@@ -345,18 +338,12 @@ namespace Fix_All.Migrations
                     b.ToTable("LaborFields");
                 });
 
-            modelBuilder.Entity("Fix_All.Models.BookNow", b =>
+            modelBuilder.Entity("BookNow", b =>
                 {
                     b.HasOne("Fix_All.Models.approve_laber", "ApproveLaber")
                         .WithMany()
                         .HasForeignKey("ApproveLarberId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("LaborField", "LaborField")
-                        .WithMany()
-                        .HasForeignKey("FieldId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Fix_All.Models.UserAccount", "UserAccount")
@@ -366,8 +353,6 @@ namespace Fix_All.Migrations
                         .IsRequired();
 
                     b.Navigation("ApproveLaber");
-
-                    b.Navigation("LaborField");
 
                     b.Navigation("UserAccount");
                 });

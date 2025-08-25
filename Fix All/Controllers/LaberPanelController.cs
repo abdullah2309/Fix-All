@@ -287,6 +287,35 @@ namespace Fix_All.Controllers
             HttpContext.Session.Clear(); // ✅ Clear session
             return RedirectToAction("laber_panel_Login");
         }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var booking = _context.BookNow.Find(id);
+            if (booking != null)
+            {
+                _context.BookNow.Remove(booking);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("LaborBooking"); // wapas list par bhejna
+        }
+        public IActionResult LaborBooking()
+        {
+            int? laborId = HttpContext.Session.GetInt32("LaberId");
+            if (laborId == null)
+            {
+                return RedirectToAction("laber_panel_Login");
+            }
+
+            var laborBookings = _context.BookNow
+                .Include(b => b.ApproveLaber)   // Labor ka data
+                .Include(b => b.UserAccount)    // Customer ka data
+                .Where(b => b.ApproveLarberId == laborId && b.Status == "Approved") // ✅ multiple condition
+                .ToList();
+
+            return View(laborBookings);
+        }
+
+
 
     }
 }

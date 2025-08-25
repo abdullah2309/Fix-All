@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<mydbcontext>(a=>a.UseSqlServer("Server=DESKTOP-KHBGNKV\\SQLEXPRESS;Database=Fix_All; Trusted_Connection=True; TrustServerCertificate=True"));
 builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();   // ? Add this line
+builder.Services.AddSession();               // already added for session
+
 
 var app = builder.Build();
 

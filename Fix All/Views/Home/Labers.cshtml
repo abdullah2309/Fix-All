@@ -5,10 +5,21 @@
     int selectedId = ViewBag.SelectedFieldId;
 }
 
+
 <br />
 <br />
 <br />
-<br />
+<div class="container-fluid page-header mb-5 py-5">
+    <div class="container">
+        <h1 class="display-3 text-white mb-3 animated slideInDown">Labers</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb text-uppercase">
+                <li class="breadcrumb-item"><a class="text-white" asp-action="Index" asp-controller="Home">Home</a></li>
+                <li class="breadcrumb-item text-white active" aria-current="page">Labers</li>
+            </ol>
+        </nav>
+    </div>
+</div>
 <form method="get" asp-action="Labers" class="row mb-3">
     <div class="col-md-4">
         <select name="fieldId" class="form-control" onchange="this.form.submit()">
@@ -27,12 +38,13 @@
         </select>
     </div>
 
-    <div class="col-md-6">
-        <input type="text" name="searchTerm"
-               value="@ViewBag.SearchTerm"
-               class="form-control"
-               placeholder="Search labor by name or skill..." />
-    </div>
+<div class="col-md-6">
+    <input type="text" name="searchTerm"
+           value="@ViewBag.SearchTerm"
+           class="form-control"
+           placeholder="Search labor by name, skill or field (e.g. fitter)..." />
+</div>
+
 
     <div class="col-md-2">
         <button type="submit" class="btn btn-primary w-100">Search</button>
@@ -46,11 +58,24 @@
             <h1 class="mb-5">Meet the Heroes Behind the Wrenches</h1>
         </div>
 
-        <div class="row">
-            @foreach (var labor in Model)
+       <div class="row">
+    <h2>Online Labors</h2>
+            @foreach (var labor in Model)  @* Model = Online *@
             {
                 @await Html.PartialAsync("_LaborProfileCard", labor)
             }
-        </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <h2>Offline Labors</h2>
+            @foreach (var labor in (List<Fix_All.Models.approve_laber>)ViewBag.OfflineLabors)
+            {
+                @await Html.PartialAsync("_LaborProfileCard2", labor)
+            }
+</div>
+
+
     </div>
 </div>

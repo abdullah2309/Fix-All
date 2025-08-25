@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Fix_All.Models.BookNow>
+
+@{
+    ViewData["Title"] = "My Bookings";
+    Layout = "~/Views/Shared/_labar_panel.cshtml";
+}
+
+<h2>My Bookings</h2>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Labor Name</th>
+            <th>Labor Email</th>
+            <th>Booked By (Customer)</th>
+            <th>Customer Contact</th>
+            <th>Customer Address</th>
+            <th>Service Name</th>
+            <th>Other Service</th>
+            <th>Booking Date</th>
+            <th>Service Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>@booking.ApproveLaber.FirstName</td>
+                <td>@booking.ApproveLaber.Email</td>
+                <td>@booking.UserAccount?.FullName</td>
+                <td>@booking.UserAccount?.ContactNumber</td>
+                <td>@booking.ServiceAddress</td>
+                <td>@booking.LaborField?.FieldName</td>
+                <td>@booking.AddMorefield</td>
+                <td>@booking.BookingDate.ToString("dd-MM-yyyy")</td>
+                <td>@booking.ServiceDate.ToString("dd-MM-yyyy")</td>
+                <td>@booking.Status</td>
+
+                <td>
+                    <form asp-action="Delete" asp-route-id="@booking.BookingId" method="post"
+                          onsubmit="return confirm('Are you sure you want to delete this booking?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
