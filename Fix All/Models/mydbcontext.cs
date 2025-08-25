@@ -14,6 +14,7 @@ namespace Fix_All.Models
         public DbSet<LaborField> LaborFields { get; set; }
         public DbSet<approve_laber> approve_labers { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
 
 
 
