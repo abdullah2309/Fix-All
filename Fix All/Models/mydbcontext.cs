@@ -1,5 +1,6 @@
 ﻿using Fix_All.Models;
 using Microsoft.EntityFrameworkCore;
+using YourProject.Models;
 
 namespace Fix_All.Models
 {
@@ -16,6 +17,7 @@ namespace Fix_All.Models
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<BookNow> BookNow { get; set; }
+        public DbSet<AdminLogin> adminLogins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
