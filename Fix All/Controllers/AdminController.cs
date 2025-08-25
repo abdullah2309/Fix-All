@@ -16,6 +16,10 @@ namespace Fix_All.Controllers
         {
             _context = context;
         }
+        public IActionResult AdminLogin()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
