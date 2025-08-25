@@ -22,7 +22,7 @@ namespace Fix_All.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Fix_All.Models.BookNow", b =>
+            modelBuilder.Entity("BookNow", b =>
                 {
                     b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
@@ -30,22 +30,23 @@ namespace Fix_All.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
 
-                    b.Property<int>("ApproveLaberApproveLarberId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ApproveLarberId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FieldId")
-                        .HasColumnType("int");
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ServiceAddress")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime>("ServiceDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -57,13 +58,11 @@ namespace Fix_All.Migrations
 
                     b.HasKey("BookingId");
 
-                    b.HasIndex("ApproveLaberApproveLarberId");
-
-                    b.HasIndex("FieldId");
+                    b.HasIndex("ApproveLarberId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("BookNow");
                 });
 
             modelBuilder.Entity("Fix_All.Models.Contact", b =>
@@ -336,29 +335,21 @@ namespace Fix_All.Migrations
                     b.ToTable("LaborFields");
                 });
 
-            modelBuilder.Entity("Fix_All.Models.BookNow", b =>
+            modelBuilder.Entity("BookNow", b =>
                 {
                     b.HasOne("Fix_All.Models.approve_laber", "ApproveLaber")
                         .WithMany()
-                        .HasForeignKey("ApproveLaberApproveLarberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LaborField", "LaborField")
-                        .WithMany()
-                        .HasForeignKey("FieldId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ApproveLarberId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Fix_All.Models.UserAccount", "UserAccount")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ApproveLaber");
-
-                    b.Navigation("LaborField");
 
                     b.Navigation("UserAccount");
                 });
