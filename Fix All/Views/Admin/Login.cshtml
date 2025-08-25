@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+    var adminEmail = ViewBag.AdminEmail ?? "Unknown";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Panel — Dashboard</title>
+    <link rel="stylesheet" href="~/css/admin.css" />
+</head>
+<body>
+    <div id="app" class="app" style="display:flex">
+        <aside class="sidebar">
+            <div class="brand" style="margin-bottom:8px">
+                <div class="logo">A</div>
+                <div>
+                    <h1 style="font-size:18px">Admin Panel</h1>
+                    <p class="muted" style="margin:4px 0 0;font-size:12px">Welcome, @adminEmail</p>
+                </div>
+            </div>
+
+            <div class="side-group">
+                <div class="side-title">Navigation</div>
+                <nav class="nav">
+                    <a href="#" class="active">Dashboard</a>
+                    <a href="#">Users</a>
+                    <a href="#">Orders</a>
+                    <a href="#">Reports</a>
+                    <a href="#">Settings</a>
+                </nav>
+            </div>
+
+            <div style="margin-top:auto;color:var(--muted);font-size:12px">© @DateTime.Now.Year AdminCorp</div>
+        </aside>
+
+        <section class="main">
+            <div class="topbar">
+                <div class="search">
+                    <input id="search" type="search" placeholder="Search anything…" />
+                </div>
+                <div class="toolbar">
+                    <a asp-action="Logout" class="logout">Logout</a>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="grid">
+                    <div class="kpi"><div class="label">Total Users</div><div class="value">12,480</div></div>
+                    <div class="kpi"><div class="label">Active Sessions</div><div class="value">892</div></div>
+                    <div class="kpi"><div class="label">Monthly Revenue</div><div class="value">$48,920</div></div>
+                    <div class="kpi"><div class="label">Server Health</div><div class="value">99.9%</div></div>
+                </div>
+
+                <div class="panel">
+                    <h2>Recent Activity</h2>
+                    <table>
+                        <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Status</th></tr></thead>
+                        <tbody>
+                            <tr><td>10:24</td><td>uzair.k</td><td>Updated pricing</td><td><span class="status ok">Success</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="footer">Made with ❤ for demo purposes only.</div>
+        </section>
+    </div>
+</body>
+</html>

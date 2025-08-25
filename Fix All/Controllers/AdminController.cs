@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.Mail;
 using MailKit.Net.Smtp;
 using MimeKit;
+using YourProject.Models;
 
 
 namespace Fix_All.Controllers
@@ -16,9 +17,34 @@ namespace Fix_All.Controllers
         {
             _context = context;
         }
-        public IActionResult AdminLogin()
+        public IActionResult Login()
         {
             return View();
+        }
+
+        // POST: Admin/Login
+        [HttpPost]
+        public IActionResult Login(AdminLogin model)
+        {
+            // Check hardcoded admin credentials
+            if (model.Email == "admin@email.com" && model.Password == "adminAbdullah123")
+            {
+                // ✅ Save session (Admin logged in)
+                HttpContext.Session.SetString("AdminEmail", model.Email);
+
+                // Redirect to Admin Dashboard
+                return RedirectToAction("Dashboard");
+            }
+
+            // ❌ Invalid credentials
+            ViewBag.Error = "Invalid email or password!";
+            return View();
+        }
+        // GET: Admin/Logout
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
         public IActionResult Index()
         {
