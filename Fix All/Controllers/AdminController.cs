@@ -28,6 +28,11 @@ namespace Fix_All.Controllers
                 .ToList();
             return View(messages);
         }
+        public IActionResult Users()
+        {
+            var users = _context.UserAccounts.ToList();
+            return View(users);
+        }
 
         public async Task<IActionResult> applyforlabar()
         {
