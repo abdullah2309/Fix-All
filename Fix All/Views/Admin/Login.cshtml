@@ -1,71 +1,128 @@
-﻿@{
-    Layout = null;
-    var adminEmail = ViewBag.AdminEmail ?? "Unknown";
+﻿@model YourProject.Models.AdminLogin
+@{
+    Layout = null; // standalone login
 }
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Admin Panel — Dashboard</title>
-    <link rel="stylesheet" href="~/css/admin.css" />
+    <title>Admin Panel — Login</title>
+    <link rel="stylesheet" href="~/css/admin.css" /> <!-- Move your <style> into admin.css -->
 </head>
+<style>
+    :root{
+      --bg:#0f172a;        /* slate-900 */
+      --panel:#111827;     /* gray-900 */
+      --muted:#94a3b8;     /* slate-400 */
+      --text:#e5e7eb;      /* gray-200 */
+      --brand:#6366f1;     /* indigo-500 */
+      --brand-2:#22d3ee;   /* cyan-400 */
+      --card:#0b1220;      
+      --success:#10b981;   
+      --danger:#ef4444;    
+      --warning:#f59e0b;   
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      background: radial-gradient(1200px 800px at 20% -10%, rgba(99,102,241,.2), transparent),
+                  radial-gradient(1000px 700px at 120% 10%, rgba(34,211,238,.18), transparent),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit}
+    .center{min-height:100dvh;display:grid;place-items:center;padding:24px}
+    .card{width:100%;max-width:440px;background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid rgba(148,163,184,.15);backdrop-filter: blur(10px);
+      border-radius:var(--radius);box-shadow:var(--shadow);padding:26px}
+    .brand{
+      display:flex;align-items:center;gap:12px;margin-bottom:14px
+    }
+    .brand .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg, var(--brand), var(--brand-2));display:grid;place-items:center;font-weight:800}
+    h1{font-size:22px;margin:0}
+    p.muted{margin:6px 0 18px;color:var(--muted);font-size:14px}
+    label{display:block;font-size:13px;margin:12px 0 8px;color:#cbd5e1}
+    input[type=email],input[type=password]{width:100%;background:#0b1220;border:1px solid rgba(148,163,184,.25);color:var(--text);
+      border-radius:14px;padding:12px 14px;outline:none;transition:border .2s}
+    input:focus{border-color:var(--brand)}
+    .row{display:flex;align-items:center;justify-content:space-between;margin:10px 0 0}
+    .checkbox{display:flex;align-items:center;gap:8px;font-size:13px;color:#cbd5e1}
+    .btn{margin-top:16px;width:100%;padding:12px 14px;border-radius:14px;border:none;cursor:pointer;font-weight:600;
+      background:linear-gradient(135deg, var(--brand), var(--brand-2));color:#0b1220;box-shadow:var(--shadow)}
+    .error{margin-top:12px;color:#fecaca;font-size:13px;display:none}
+
+    /* Dashboard */
+    .app{display:none;height:100dvh}
+    .sidebar{width:260px;background:rgba(17,24,39,.7);backdrop-filter: blur(10px);border-right:1px solid rgba(148,163,184,.15);
+      padding:18px;display:flex;flex-direction:column;gap:12px}
+    .side-title{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin:10px 0 4px}
+    .nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;text-decoration:none;color:#d1d5db;border:1px solid transparent}
+    .nav a.active, .nav a:hover{border-color:rgba(148,163,184,.25);background:#0b1220}
+    .main{flex:1;display:flex;flex-direction:column}
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(148,163,184,.15);
+      background:rgba(2,6,23,.6);backdrop-filter: blur(6px)}
+    .search{display:flex;align-items:center;gap:10px}
+    .search input{width:280px;max-width:38vw;background:#0b1220;border:1px solid rgba(148,163,184,.25);color:var(--text);
+      border-radius:12px;padding:10px 12px}
+    .toolbar{display:flex;align-items:center;gap:10px}
+    .outline-btn{background:transparent;border:1px solid rgba(148,163,184,.35);color:#e2e8f0;padding:8px 12px;border-radius:12px;cursor:pointer}
+    .logout{background:linear-gradient(135deg, #f43f5e, #fb7185);border:none;color:white;padding:9px 14px;border-radius:12px;cursor:pointer}
+
+    .content{padding:18px;overflow:auto;display:grid;gap:18px}
+    .grid{display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:18px}
+    @@media (max-width:1100px){.grid{grid-template-columns:repeat(2, minmax(0,1fr));}.sidebar{width:220px}}
+    @@media (max-width:700px){.grid{grid-template-columns:1fr}.sidebar{display:none}.search input{max-width:55vw}}
+
+    .kpi{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid rgba(148,163,184,.15);
+      border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px}
+    .kpi .label{font-size:12px;color:var(--muted)}
+    .kpi .value{font-size:26px;font-weight:700}
+    .kpi .trend{font-size:12px}
+    .trend.up{color:#86efac}.trend.down{color:#fecaca}
+
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid rgba(148,163,184,.15);
+      border-radius:16px;padding:16px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 8px;border-bottom:1px dashed rgba(148,163,184,.2);text-align:left;font-size:14px}
+    th{color:#cbd5e1;font-weight:600}
+    .status{padding:4px 8px;border-radius:999px;font-size:12px}
+    .ok{background:rgba(16,185,129,.15);color:#a7f3d0;border:1px solid rgba(16,185,129,.35)}
+    .warn{background:rgba(245,158,11,.15);color:#fde68a;border:1px solid rgba(245,158,11,.35)}
+    .bad{background:rgba(239,68,68,.15);color:#fecaca;border:1px solid rgba(239,68,68,.35)}
+
+    .footer{padding:10px 18px;color:var(--muted);font-size:12px;border-top:1px solid rgba(148,163,184,.15)}
+  </style>
 <body>
-    <div id="app" class="app" style="display:flex">
-        <aside class="sidebar">
-            <div class="brand" style="margin-bottom:8px">
-                <div class="logo">A</div>
+    <div id="loginView" class="center">
+        <div class="card">
+            <div class="brand">
                 <div>
-                    <h1 style="font-size:18px">Admin Panel</h1>
-                    <p class="muted" style="margin:4px 0 0;font-size:12px">Welcome, @adminEmail</p>
+                    <h1>Admin Panel Login</h1>
+                    <p class="muted">Please sign in with your admin email & password.</p>
                 </div>
             </div>
 
-            <div class="side-group">
-                <div class="side-title">Navigation</div>
-                <nav class="nav">
-                    <a href="#" class="active">Dashboard</a>
-                    <a href="#">Users</a>
-                    <a href="#">Orders</a>
-                    <a href="#">Reports</a>
-                    <a href="#">Settings</a>
-                </nav>
-            </div>
+            <form asp-action="Login" method="post">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" type="email" placeholder="Enter your email" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
 
-            <div style="margin-top:auto;color:var(--muted);font-size:12px">© @DateTime.Now.Year AdminCorp</div>
-        </aside>
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="password" placeholder="Enter your password" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
 
-        <section class="main">
-            <div class="topbar">
-                <div class="search">
-                    <input id="search" type="search" placeholder="Search anything…" />
-                </div>
-                <div class="toolbar">
-                    <a asp-action="Logout" class="logout">Logout</a>
-                </div>
-            </div>
+                <button class="btn" type="submit">Sign In</button>
 
-            <div class="content">
-                <div class="grid">
-                    <div class="kpi"><div class="label">Total Users</div><div class="value">12,480</div></div>
-                    <div class="kpi"><div class="label">Active Sessions</div><div class="value">892</div></div>
-                    <div class="kpi"><div class="label">Monthly Revenue</div><div class="value">$48,920</div></div>
-                    <div class="kpi"><div class="label">Server Health</div><div class="value">99.9%</div></div>
-                </div>
-
-                <div class="panel">
-                    <h2>Recent Activity</h2>
-                    <table>
-                        <thead><tr><th>Time</th><th>User</th><th>Action</th><th>Status</th></tr></thead>
-                        <tbody>
-                            <tr><td>10:24</td><td>uzair.k</td><td>Updated pricing</td><td><span class="status ok">Success</span></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="footer">Made with ❤ for demo purposes only.</div>
-        </section>
+                @if (ViewBag.Error != null)
+                {
+                    <div id="error" class="error">@ViewBag.Error</div>
+                }
+            </form>
+        </div>
     </div>
 </body>
 </html>

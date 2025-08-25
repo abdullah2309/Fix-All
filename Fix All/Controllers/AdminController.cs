@@ -27,13 +27,13 @@ namespace Fix_All.Controllers
         public IActionResult Login(AdminLogin model)
         {
             // Check hardcoded admin credentials
-            if (model.Email == "admin@email.com" && model.Password == "adminAbdullah123")
+            if (model.Email == "admin@email.com" && model.Password == "adminabdullah123")
             {
                 // ✅ Save session (Admin logged in)
                 HttpContext.Session.SetString("AdminEmail", model.Email);
 
                 // Redirect to Admin Dashboard
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("Index");
             }
 
             // ❌ Invalid credentials
@@ -47,12 +47,19 @@ namespace Fix_All.Controllers
             return RedirectToAction("Login");
         }
         public IActionResult Index()
+
         {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login");
+
             return View();
         }
 
         public IActionResult Messages()
         {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login");
+
             var messages = _context.Contacts
                 .OrderByDescending(c => c.CreatedAt)
                 .ToList();
@@ -60,12 +67,18 @@ namespace Fix_All.Controllers
         }
         public IActionResult Users()
         {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login");
+
             var users = _context.UserAccounts.ToList();
             return View(users);
         }
 
         public async Task<IActionResult> applyforlabar()
         {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login");
+
             var providers = await _context.ServiceProviders
                 .Include(s => s.LaborField)
                 .OrderByDescending(s => s.LarberId) // ✅ Newest first
@@ -74,6 +87,10 @@ namespace Fix_All.Controllers
         }     
         public async Task<IActionResult> Labers()
         {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login");
+
+
             var providers = await _context.approve_labers
                 .Include(s => s.LaborField)
                 .OrderByDescending(s => s.ApproveLarberId) // ✅ Newest first

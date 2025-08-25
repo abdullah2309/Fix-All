@@ -71,6 +71,9 @@ namespace Fix_All.Controllers
         //// Admin Approval
         public IActionResult Manage()
         {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login" , "admin");
+
             var bookings = _context.BookNow
                 .Include(b => b.UserAccount)
                 .Include(b => b.ApproveLaber)
