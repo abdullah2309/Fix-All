@@ -121,9 +121,13 @@
                 <a asp-action="Index" asp-controller="Home" class="action-btn">
                     <i class="fas fa-home"></i> Home
                 </a>
-                <!-- Edit Profile -->
-            
+
+                <!-- Book Now Button -->
+                <a asp-action="BookNow" asp-route-id="@Model.ApproveLarberId" class="action-btn secondary-btn">
+                    <i class="fas fa-calendar-check"></i> Book Now
+                </a>
             </div>
+
 
             <!-- Name + Headline -->
             <h2>@Model.FirstName @Model.LastName</h2>

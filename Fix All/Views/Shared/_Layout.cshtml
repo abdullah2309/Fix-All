@@ -108,10 +108,10 @@
                 <!-- LOGIN / SIGN IN on the right -->
                 @if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
                 {
-                    <li class="nav-item">
+                    <li class="nav-item nav-link">
                         <a class="nav-link nav-link">Welcome, @HttpContextAccessor.HttpContext.Session.GetString("UserName")</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item nav-link">
                         <a class="nav-link nav-link" asp-action="Logout" asp-controller="Home">Logout</a>
                     </li>
                 }
