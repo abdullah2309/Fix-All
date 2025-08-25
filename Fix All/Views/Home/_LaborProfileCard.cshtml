@@ -17,13 +17,14 @@
                    class="btn btn-light btn-sm mt-2">
                     View Profile
                 </a>
-
-                <a asp-action="BookNow"
-                   asp-controller="Home"
-                   asp-route-id="@Model.ApproveLarberId"
-                   class="btn btn-warning btn-sm mt-2">
+                <a asp-controller="BookNow"
+                   asp-action="Create"
+                   asp-route-laborId="@Model.ApproveLarberId"
+                   class="btn btn-primary">
                     Book Now
                 </a>
+
+                
             </div>
 
         </div>

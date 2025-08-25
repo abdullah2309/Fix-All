@@ -1,35 +1,49 @@
 ﻿using Fix_All.Models;
 using System.ComponentModel.DataAnnotations;
-
-public class BookNow
+using System.ComponentModel.DataAnnotations.Schema;
+namespace Fix_All.Models
 {
-    [Key]
-    public int BookingId { get; set; }
+    public class BookNow
+    {
+        [Key]
+        public int BookingId { get; set; }
 
-    // Foreign Key → User
-    [Required]
-    public int UserId { get; set; }
-    public UserAccount UserAccount { get; set; }
+        // Foreign Key → User who booked
+        [Required]
+        [ForeignKey("UserAccount")]
+        public int UserId { get; set; }
+        public UserAccount UserAccount { get; set; }
 
-    // Foreign Key → Labor
-    [Required]
-    public int ApproveLarberId { get; set; }
-    public approve_laber ApproveLaber { get; set; }  // navigation property
+        // Foreign Key → Booked Labor
+        [Required]
+        [ForeignKey("approve_laber")]
+        public int ApproveLarberId { get; set; }
+        public approve_laber ApproveLaber { get; set; }
 
-    [Required]
-    public DateTime BookingDate { get; set; } = DateTime.Now;
+        // Foreign Key → Service Field
+        [Required]
+        [ForeignKey("LaborField")]
+        public int FieldId { get; set; }
+        public LaborField LaborField { get; set; }
 
-    [Required]
-    [StringLength(250)]
-    public string ServiceAddress { get; set; }
+        [Required]
+        public DateTime BookingDate { get; set; } = DateTime.Now;
 
-    [Required]
-    public DateTime ServiceDate { get; set; }
+        [Required]
+        [StringLength(250)]
+        public string ServiceAddress { get; set; }
+        
+        [StringLength(250)]
+        public string AddMorefield { get; set; }
 
-    [StringLength(500)]
-    public string? Notes { get; set; }
+        [Required]
+        public DateTime ServiceDate { get; set; }
 
-    [Required]
-    [MaxLength(20)]
-    public string Status { get; set; } = "Pending";
+        [StringLength(500)]
+        public string? Notes { get; set; }
+
+        [Required]
+        [MaxLength(20)]
+        public string Status { get; set; } = "Pending";
+    }
 }
