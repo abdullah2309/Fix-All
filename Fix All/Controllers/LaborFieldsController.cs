@@ -18,6 +18,7 @@ public class LaborFieldsController : Controller
         return View(await _context.LaborFields.ToListAsync());
     }
 
+   
     // CREATE: GET
     public IActionResult Create()
     {
@@ -100,4 +101,6 @@ public class LaborFieldsController : Controller
         if (laborField == null) return NotFound();
         return View(laborField);
     }
+  
+
 }

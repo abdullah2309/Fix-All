@@ -75,31 +75,47 @@ namespace Fix_All.Controllers
                 .Include(b => b.UserAccount)
                 .Include(b => b.ApproveLaber)
                 .Include(b => b.LaborField)
+                .OrderByDescending(b => b.BookingId) // 🔹 agar latest pehle dikhana hai
+                                                     //.OrderBy(b => b.BookingId)         // 🔹 agar ascending (1,2,3...) chahiye
                 .ToList();
 
             return View(bookings);
         }
 
+        [HttpPost]
         public IActionResult Approve(int id)
         {
-            var booking = _context.BookNow.Find(id);
-            if (booking != null)
+            var booking = _context.BookNow.FirstOrDefault(b => b.BookingId == id);
+            if (booking == null)
             {
-                booking.Status = "Approved";
-                _context.SaveChanges();
+                TempData["Message"] = "Booking not found!";
+                return RedirectToAction("Manage");
             }
+
+            booking.Status = "Approved";
+            _context.SaveChanges();
+
+            TempData["Message"] = "Booking Approved Successfully!";
             return RedirectToAction("Manage");
         }
 
+
+        [HttpPost]
         public IActionResult Reject(int id)
         {
-            var booking = _context.BookNow.Find(id);
-            if (booking != null)
+            var booking = _context.BookNow.FirstOrDefault(b => b.BookingId == id);
+            if (booking == null)
             {
-                booking.Status = "Rejected";
-                _context.SaveChanges();
+                TempData["Message"] = "Booking not found!";
+                return RedirectToAction("Manage");
             }
+
+            booking.Status = "Rejected";
+            _context.SaveChanges();
+
+            TempData["Message"] = "Booking Rejected Successfully!";
             return RedirectToAction("Manage");
         }
+
     }
 }
