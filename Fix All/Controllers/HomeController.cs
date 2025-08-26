@@ -29,7 +29,22 @@ namespace Fix_All.Controllers
 
         public IActionResult Index()
         {
+            // ✅ Check if session has UserId
+            var userId = HttpContext.Session.GetInt32("UserId");
+           
+
+            // ✅ Get all approved labors (for homepage listing)
             var labors = _context.approve_labers.ToList();
+
+            // ✅ Get the latest booking for this user
+            var latestBooking = _context.BookNow
+                .Where(b => b.UserId == userId)
+                .OrderByDescending(b => b.BookingDate)
+                .FirstOrDefault();
+
+            // ✅ Pass to layout via ViewBag
+            ViewBag.Booking = latestBooking;
+
             return View(labors);
         }
         public IActionResult Labers(int? fieldId, string searchTerm)
@@ -253,6 +268,15 @@ namespace Fix_All.Controllers
             return View();
         }
 
+        public IActionResult Testimonials()
+        {
+            var feedbacks = _context.Feedbacks
+                .OrderByDescending(f => f.CreatedAt)
+                .Take(10) // latest 10 feedbacks
+                .ToList();
+
+            return View(feedbacks);
+        }
 
 
 

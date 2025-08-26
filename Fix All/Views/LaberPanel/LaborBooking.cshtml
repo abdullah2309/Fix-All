@@ -43,7 +43,15 @@
                           onsubmit="return confirm('Are you sure you want to delete this booking?');">
                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
+
                 </td>
+                <td>
+                    <form asp-controller="BookNow" asp-action="MarkAsDone" asp-route-id="@booking.BookingId" method="post"
+                          onsubmit="return confirm('Mark this booking as Done?');" style="display:inline-block">
+                        <button type="submit" class="btn btn-success btn-sm">Done Work</button>
+                    </form>
+                </td>
+
             </tr>
         }
     </tbody>
