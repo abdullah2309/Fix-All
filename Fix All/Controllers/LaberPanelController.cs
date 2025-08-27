@@ -298,6 +298,10 @@ namespace Fix_All.Controllers
             }
             return RedirectToAction("LaborBooking"); // wapas list par bhejna
         }
+        public IActionResult Labour_Guider_Help()
+        {
+            return View();
+        }
         public IActionResult LaborBooking()
         {
             int? laborId = HttpContext.Session.GetInt32("LaberId");
