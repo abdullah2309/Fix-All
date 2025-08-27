@@ -1,5 +1,44 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<Fix_All.Models.Feedback>
+
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="text-center">
+            <h6 class="text-secondary text-uppercase">Testimonial</h6>
+            <h1 class="mb-5">Our Clients Say!</h1>
+        </div>
+
+        <div class="owl-carousel testimonial-carousel position-relative wow fadeInUp" data-wow-delay="0.1s">
+            @foreach (var item in Model)
+            {
+                <div class="testimonial-item text-center">
+                    <div class="testimonial-text bg-light text-center p-4 mb-4">
+                        <p class="mb-0">@item.Message</p>
+                    </div>
+
+                    <!-- Profile Image Placeholder -->
+                    <img class="bg-light rounded-circle p-2 mx-auto mb-2"
+                         src="~/assets/img/testimonial-1.jpg"
+                         style="width: 80px; height: 80px;">
+
+                    <!-- Rating Stars -->
+                    <div class="mb-2">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= item.Rating)
+                            {
+                                <small class="fa fa-star text-secondary"></small>
+                            }
+                            else
+                            {
+                                <small class="fa fa-star text-muted"></small>
+                            }
+                        }
+                    </div>
+
+                    <h5 class="mb-1">@item.Name</h5>
+                    <p class="m-0">@item.Email</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
