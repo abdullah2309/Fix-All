@@ -1,5 +1,73 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Labour Panel Guide";
+    Layout = "~/Views/Shared/_labar_panel.cshtml";
 }
+
+<div class="container my-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white">
+            <h3>👨‍🔧 Labour Panel Guide & Help</h3>
+        </div>
+        <div class="card-body">
+            <p>
+                Welcome to the <strong>FixAll Labour Panel</strong>.
+                This guide will help you understand how to use different features step by step.
+            </p>
+
+            <!-- Dashboard -->
+            <h4 class="mt-4">📊 Dashboard</h4>
+            <p>
+                The Dashboard is the home page of your panel.
+                From here, you can quickly access all options like updating profile, viewing bookings, and logging out.
+            </p>
+
+            <!-- Profile -->
+            <h4 class="mt-4">👤 Profile Management</h4>
+            <ul>
+                <li>
+                    <strong>Update Profile:</strong> Edit your personal information, contact details, education, skills, and profile picture.
+                </li>
+                <li>
+                    <strong>View Profile:</strong> See how customers will view your profile (with photo, skills, experience, etc.).
+                </li>
+            </ul>
+
+            <!-- Bookings -->
+            <h4 class="mt-4">📅 Bookings</h4>
+            <p>
+                In the Bookings section, you can see all jobs assigned to you:
+            </p>
+            <ul>
+                <li>✔️ Customer Name, Contact & Address</li>
+                <li>✔️ Service booked (Plumbing, Electrician, etc.)</li>
+                <li>✔️ Booking Date & Service Date</li>
+                <li>
+                    <strong>Actions:</strong>
+                    <ul>
+                        <li><span class="badge bg-success">Done Work</span> → Mark the booking as completed.</li>
+                        <li><span class="badge bg-danger">Delete</span> → Remove booking (if invalid).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Logout -->
+            <h4 class="mt-4">🚪 Logout</h4>
+            <p>
+                Use this option to safely log out from your panel after finishing your work.
+            </p>
+
+            <!-- Tips -->
+            <h4 class="mt-4">💡 Tips for Labours</h4>
+            <ul>
+                <li>Always keep your profile updated so customers trust you more.</li>
+                <li>Mark work as <strong>Done</strong> only when you have finished the job.</li>
+                <li>Check your bookings daily to avoid missing jobs.</li>
+                <li>Logout properly after use for security.</li>
+            </ul>
+        </div>
+
+        <div class="card-footer text-center">
+            <p class="mb-0">FixAll Labour Panel Help Guide © @DateTime.Now.Year</p>
+        </div>
+    </div>
+</div>

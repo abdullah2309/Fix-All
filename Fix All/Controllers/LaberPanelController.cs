@@ -300,6 +300,11 @@ namespace Fix_All.Controllers
         }
         public IActionResult Labour_Guider_Help()
         {
+            int? laborId = HttpContext.Session.GetInt32("LaberId");
+            if (laborId == null)
+            {
+                return RedirectToAction("laber_panel_Login");
+            }
             return View();
         }
         public IActionResult LaborBooking()
