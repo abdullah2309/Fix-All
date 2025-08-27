@@ -1,0 +1,74 @@
+﻿@model Fix_All.Models.BookNow
+@{
+    ViewData["Title"] = "Book Now";
+}
+<br>
+<br>
+<br>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 600px; border-radius: 12px;">
+        <h2 class="mb-4 text-center">Book Now</h2>
+
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <!-- Hidden LaborId -->
+            <input type="hidden" asp-for="ApproveLarberId" value="@ViewBag.LaborId" />
+
+            <div class="form-group mb-3">
+                <label class="form-label">Labor Name</label>
+                <input type="text" class="form-control" value="@ViewBag.LaborName" readonly />
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">select Laber Type</label>
+                <select asp-for="FieldId" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Fields, "FieldId", "FieldName"))" required>
+                    <option value="">-- Select Field --</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Full Address</label>
+                <input asp-for="ServiceAddress" class="form-control"
+                       placeholder="Enter service address" required />
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Other Laber Type</label>
+                <input asp-for="AddMorefield" class="form-control"
+                       placeholder="Enter extra field (optional)" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label">Set Date & Time </label>
+                <input asp-for="ServiceDate" type="date" class="form-control" required />
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Notes" class="form-label"></label>
+                <textarea asp-for="Notes" class="form-control" rows="3" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Book Now</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Success Message
+    @if (TempData["Message"] != null)
+    {
+        <text>
+                alert("@TempData["Message"]");
+        </text>
+    }
+
+        // Error Message
+    @if (TempData["Error"] != null)
+    {
+        <text>
+                alert("@TempData["Error"]");
+        </text>
+    }
+</script>

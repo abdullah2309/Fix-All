@@ -12,12 +12,13 @@ public class LaborFieldsController : Controller
         _context = context;
     }
 
-    // READ: List all
+    // READ: List all .
     public async Task<IActionResult> Index()
     {
         return View(await _context.LaborFields.ToListAsync());
     }
 
+   
     // CREATE: GET
     public IActionResult Create()
     {
@@ -46,7 +47,7 @@ public class LaborFieldsController : Controller
         return View(laborField);
     }
 
-    // UPDATE: POST
+    // UPDATE: POST ,
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, LaborField laborField)
@@ -78,17 +79,17 @@ public class LaborFieldsController : Controller
         if (laborField == null) return NotFound();
         return View(laborField);
     }
+  
 
     // DELETE: POST
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
+    [HttpPost]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var laborField = await _context.LaborFields.FindAsync(id);
+        var laborField = _context.LaborFields.Find(id);
         if (laborField != null)
         {
             _context.LaborFields.Remove(laborField);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
         return RedirectToAction(nameof(Index));
     }
@@ -100,4 +101,6 @@ public class LaborFieldsController : Controller
         if (laborField == null) return NotFound();
         return View(laborField);
     }
+  
+
 }
