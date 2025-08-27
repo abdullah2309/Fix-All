@@ -79,17 +79,17 @@ public class LaborFieldsController : Controller
         if (laborField == null) return NotFound();
         return View(laborField);
     }
+  
 
     // DELETE: POST
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
+    [HttpPost]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var laborField = await _context.LaborFields.FindAsync(id);
+        var laborField = _context.LaborFields.Find(id);
         if (laborField != null)
         {
             _context.LaborFields.Remove(laborField);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
         return RedirectToAction(nameof(Index));
     }
