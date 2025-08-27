@@ -93,5 +93,5 @@ The system provides **three main panels**:
 
 ## 👨‍💻 Author  
 **Abdullah**  
-📧 [your.email@example.com]  
-🌐 [Your Portfolio or GitHub Profile]  
+📧 [Abdullah2309a@aptechorangi.com ]  
+🌐 [https://abdullah2309a.netlify.app/]  
