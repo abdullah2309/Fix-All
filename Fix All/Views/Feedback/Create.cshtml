@@ -1,8 +1,8 @@
 ﻿@model Fix_All.Models.Feedback
 
-<br>
-</br>
-</br>
+<br />
+<br />
+<br />
 <div class="feedback-wrapper">
     <div class="feedback-container">
         @if (TempData["Success"] != null)
@@ -15,10 +15,8 @@
         <h2>Feedback Form</h2>
         <p>We would love to hear your thoughts!</p>
 
-
         <form asp-action="Create" method="post" class="feedback-form" novalidate>
-            <input type="hidden" asp-for="BookingId" value="@ViewBag.BookingId" />
-
+            <input type="hidden" asp-for="BookingId" value="@ViewBag.BookingId" required />
 
             <div class="form-group">
                 <label asp-for="Name"></label>
@@ -55,6 +53,7 @@
         </form>
     </div>
 </div>
+
 
 <style>
     /* Page Centering */
@@ -132,3 +131,7 @@
         font-size: 0.9rem;
     }
 </style>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

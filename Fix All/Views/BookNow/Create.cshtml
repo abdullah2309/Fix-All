@@ -21,7 +21,7 @@
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="FieldId" class="form-label"></label>
+                <label class="form-label">select Laber Type</label>
                 <select asp-for="FieldId" class="form-control"
                         asp-items="@(new SelectList(ViewBag.Fields, "FieldId", "FieldName"))" required>
                     <option value="">-- Select Field --</option>
@@ -29,19 +29,19 @@
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="ServiceAddress" class="form-label"></label>
+                <label class="form-label">Full Address</label>
                 <input asp-for="ServiceAddress" class="form-control"
                        placeholder="Enter service address" required />
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="AddMorefield" class="form-label"></label>
+                <label class="form-label">Other Laber Type</label>
                 <input asp-for="AddMorefield" class="form-control"
                        placeholder="Enter extra field (optional)" />
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="ServiceDate" class="form-label"></label>
+                <label class="form-label">Set Date & Time </label>
                 <input asp-for="ServiceDate" type="date" class="form-control" required />
             </div>
 
