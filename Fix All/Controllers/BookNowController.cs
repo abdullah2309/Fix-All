@@ -13,6 +13,19 @@ namespace Fix_All.Controllers
         {
             _context = context;
         }
+        [HttpPost]
+        public IActionResult MarkAsDone(int id)
+        {
+            var booking = _context.BookNow.Find(id);
+            if (booking == null) return NotFound();
+
+            booking.Status = "Completed";   // Update status
+            _context.Update(booking);
+            _context.SaveChanges();
+
+            return RedirectToAction("index", "LaberPanel"); // back to labor panel
+        }
+
         [HttpGet]
         public IActionResult Create(int laborId)
         {

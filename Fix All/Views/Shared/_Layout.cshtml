@@ -1,5 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
+@{
+    var booking = ViewBag.Booking as Fix_All.Models.BookNow;
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -110,6 +114,20 @@
                 {
                     <li class="nav-item nav-link">
                         <a class="nav-link nav-link">Welcome, @HttpContextAccessor.HttpContext.Session.GetString("UserName")</a>
+                    </li>
+                    <li class="nav-item nav-link">
+                        @if (booking != null && booking.Status == "Completed")
+                        {
+                            <a asp-controller="Feedback" asp-action="Create"
+                               asp-route-bookingId="@booking.BookingId"
+                               class="btn btn-sm btn-primary">
+                                Give Feedback
+                            </a>
+                        }
+                        else if (booking != null)
+                        {
+                            <span class="text-muted">Waiting...</span>
+                        }
                     </li>
                     <li class="nav-item nav-link">
                         <a class="nav-link nav-link" asp-action="Logout" asp-controller="Home">Logout</a>

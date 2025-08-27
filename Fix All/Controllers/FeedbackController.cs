@@ -22,15 +22,22 @@ namespace Fix_All.Controllers
         [HttpPost]
         public IActionResult Create(Feedback feedback)
         {
-            if (ModelState.IsValid)
+            // Save feedback
+            _context.Feedbacks.Add(feedback);
+            _context.SaveChanges();
+
+            // ✅ Find related booking
+            var booking = _context.BookNow.FirstOrDefault(b => b.BookingId == feedback.BookingId);
+            if (booking != null)
             {
-                _context.Feedbacks.Add(feedback);
+                booking.Status = "Done";  // update booking status
+                _context.BookNow.Update(booking);
                 _context.SaveChanges();
-                TempData["Success"] = "Thanks for your feedback!";
-                return RedirectToAction("MyBookings", "UserPanel"); // redirect to customer panel
             }
 
-            return View(feedback);
+            TempData["Success"] = "Thanks for your feedback!";
+            return RedirectToAction("Index", "Home"); // redirect to customer panel
+
         }
     }
 }
