@@ -18,6 +18,8 @@ namespace Fix_All.Models
         public DbSet<UserAccount> UserAccounts { get; set; }
         public DbSet<BookNow> BookNow { get; set; }
         public DbSet<AdminLogin> adminLogins { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
