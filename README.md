@@ -43,7 +43,7 @@ The system provides **three main panels**:
 <img src="Fix All/wwwroot/fix all readme images/admin panel.PNG" width="100%">
 
 ### 🔹 Labor Page  
-![Labor Page](laberpage.png)  
+<img src="Fix All/wwwroot/fix all readme images/laberpanel .png" width="100%">
 
 
 ---
