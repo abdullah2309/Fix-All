@@ -268,6 +268,15 @@ namespace Fix_All.Controllers
             return View();
         }
 
+        public IActionResult Testimonials()
+        {
+            var feedbacks = _context.Feedbacks
+                .OrderByDescending(f => f.CreatedAt)
+                .Take(10) // latest 10 feedbacks
+                .ToList();
+
+            return View(feedbacks);
+        }
 
 
 
