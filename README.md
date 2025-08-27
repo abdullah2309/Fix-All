@@ -45,6 +45,9 @@ The system provides **three main panels**:
 ### 🔹 Labor Page  
 <img src="Fix All/wwwroot/fix all readme images/laberpanel .png" width="100%">
 
+### 🔹 Labour Guider Help  
+<img src="Fix All/wwwroot/fix all readme images/laberpane help.png" width="100%">
+
 
 ---
 
