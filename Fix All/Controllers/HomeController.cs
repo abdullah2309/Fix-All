@@ -27,12 +27,145 @@ namespace Fix_All.Controllers
             _configuration = configuration;
         }
 
-        public IActionResult Index() => View();
+        public IActionResult Index()
+        {
+            // ✅ Check if session has UserId
+            var userId = HttpContext.Session.GetInt32("UserId");
+           
+
+            // ✅ Get all approved labors (for homepage listing)
+            var labors = _context.approve_labers.ToList();
+
+            // ✅ Get the latest booking for this user
+            var latestBooking = _context.BookNow
+                .Where(b => b.UserId == userId)
+                .OrderByDescending(b => b.BookingDate)
+                .FirstOrDefault();
+
+            // ✅ Pass to layout via ViewBag
+            ViewBag.Booking = latestBooking;
+
+            return View(labors);
+        }
+        public IActionResult Labers(int? fieldId, string searchTerm)
+        {
+            var onlineLabors = _context.approve_labers
+                .Where(l => l.Status == "Approved" && l.OnlineStatus == "Online")
+                .AsQueryable();
+
+            var offlineLabors = _context.approve_labers
+                .Where(l => l.Status == "Approved" && l.OnlineStatus == "Offline")
+                .AsQueryable();
+
+            // ✅ Filter by Category
+            if (fieldId.HasValue && fieldId.Value > 0)
+            {
+                onlineLabors = onlineLabors.Where(l => l.FieldId == fieldId.Value);
+                offlineLabors = offlineLabors.Where(l => l.FieldId == fieldId.Value);
+            }
+
+            // ✅ Search by Name, Headline, Skills, AddMoreField
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                onlineLabors = onlineLabors.Where(l =>
+                    l.FirstName.Contains(searchTerm) ||
+                    l.LastName.Contains(searchTerm) ||
+                    l.Headline.Contains(searchTerm) ||
+                    l.Skills.Contains(searchTerm) ||                // 👈 skills search
+                    l.addmorefield.Contains(searchTerm)             // 👈 addmorefield search
+                );
+
+                offlineLabors = offlineLabors.Where(l =>
+                    l.FirstName.Contains(searchTerm) ||
+                    l.LastName.Contains(searchTerm) ||
+                    l.Headline.Contains(searchTerm) ||
+                    l.Skills.Contains(searchTerm) ||
+                    l.addmorefield.Contains(searchTerm)
+                );
+            }
+
+            // ✅ Pass data to View
+            ViewBag.Fields = _context.LaborFields.ToList();
+            ViewBag.SelectedFieldId = fieldId ?? 0;
+            ViewBag.SearchTerm = searchTerm;
+            ViewBag.OfflineLabors = offlineLabors.ToList();
+
+            return View(onlineLabors.ToList());
+        }
+
+
         public IActionResult About() => View();
         public IActionResult Services() => View();
         public IActionResult Contact() => View();
+        [HttpPost]
+        public IActionResult Contact(Contact model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Contacts.Add(model);
+                _context.SaveChanges();
+
+                TempData["Success"] = "Your message has been sent successfully!";
+                return RedirectToAction("Contact");
+            }
+
+            return View(model);
+        }
+
         public IActionResult Signin() => View();
+        [HttpPost]
+        public IActionResult SignUp(UserAccount model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.UserAccounts.Add(model);
+                _context.SaveChanges();
+                TempData["Message"] = "Account created successfully!";
+                return RedirectToAction("SignIn");
+            }
+            TempData["Error"] = "Something went wrong!";
+            return RedirectToAction("SignUp");
+        }
+
+        [HttpPost]
+        public IActionResult SignIn(UserAccount model)
+        {
+            var user = _context.UserAccounts
+                .FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
+
+            if (user != null)
+            {
+                // ✅ Session set karna
+                HttpContext.Session.SetString("UserName", user.FullName);
+                HttpContext.Session.SetInt32("UserId", user.Id);
+
+                
+                return RedirectToAction("Index", "Home");
+            }
+
+            TempData["Error"] = "Invalid Email or Password!";
+            return RedirectToAction("SignIn");
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear(); // ✅ sab session clear
+            return RedirectToAction("index", "Home");
+        }
+
+
         public IActionResult applynow() => View();
+        public IActionResult LaborProfile(int id)
+        {
+            var labor = _context.approve_labers
+                                .FirstOrDefault(l => l.ApproveLarberId == id);
+
+            if (labor == null)
+            {
+                return NotFound();
+            }
+
+            return View(labor);
+        }
 
         [HttpGet]
         public IActionResult LaborSignin()
@@ -126,6 +259,27 @@ namespace Fix_All.Controllers
                     Text = f.FieldName
                 }).ToList();
         }
+        public IActionResult _LaborProfileCard()
+        {
+            return View();
+        }
+        public IActionResult _LaborProfileCard2()
+        {
+            return View();
+        }
+
+        public IActionResult Testimonials()
+        {
+            var feedbacks = _context.Feedbacks
+                .OrderByDescending(f => f.CreatedAt)
+                .Take(10) // latest 10 feedbacks
+                .ToList();
+
+            return View(feedbacks);
+        }
+
+
+
 
     }
 }

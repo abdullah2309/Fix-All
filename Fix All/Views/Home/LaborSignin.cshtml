@@ -9,6 +9,9 @@
     <meta charset="UTF-8">
     <title>Join Our Service Network</title>
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </head>
 <style>
     * {
@@ -109,7 +112,6 @@
         resize: vertical;
         min-height: 100px;
     }
-    /* ✅ Validation error styling */
 
     .text-danger {
         color: red !important;
@@ -222,9 +224,8 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="addmorefield"></label>
-                <input asp-for="addmorefield" class="form-control" placeholder="Enter additional field info" />
-                <span asp-validation-for="addmorefield" class="text-danger"></span>
+                <label>Add other labor Field (Optional)</label>
+                <input asp-for="addmorefield" class="form-control" placeholder="e.g. Plumber, Electrician, Welder" />
             </div>
 
             <div class="form-group">
@@ -233,10 +234,10 @@
                 <span asp-validation-for="Experience" class="text-danger"></span>
             </div>
 
-            <!-- File Uploads with Preview -->
+            <!-- File Uploads -->
             <div class="form-row">
                 <div class="form-group">
-                    <label>Upload CV/Resume</label>
+                    <label>Upload CV/Resume (Optional)</label>
                     <input type="file" name="cv" class="form-control" />
                     @if (!string.IsNullOrEmpty(Model.CVFilePath))
                     {
@@ -255,6 +256,23 @@
                 </div>
             </div>
 
+            <!-- Payment Method -->
+            <div class="form-group full-width">
+                <label >Payment Method</label>
+                <select  class="form-control" id="PaymentMethod" required>
+                    <option value="">-- Select Payment Method --</option>
+                    <option value="easypaisa">Easypaisa</option>
+                    <option value="jazzcash">JazzCash</option>
+                    <option value="bank">Bank Transfer</option>
+                </select>
+                <span  class="text-danger"></span>
+            </div>
+
+            <div id="easypaisa-details" class="form-group full-width" style="display:none;">
+                <label >Easypaisa Account Number</label>
+                <input  class="form-control" placeholder="03XXXXXXXXX" />
+                <span  class="text-danger"></span>
+            </div>
 
             <!-- Passwords -->
             <div class="form-row">
@@ -268,17 +286,24 @@
                     <input type="password" name="confirmPassword" class="form-control" placeholder="Re-enter password" />
                 </div>
             </div>
-               
-           
 
             <button type="submit" class="continue-button">🚀 Submit Application</button>
         </form>
     </div>
 
-    @section Scripts {
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    }
+    <script>
+        $(document).ready(function () {
+            function toggleEasypaisa() {
+                if ($("#PaymentMethod").val() === "easypaisa") {
+                    $("#easypaisa-details").show();
+                } else {
+                    $("#easypaisa-details").hide();
+                    $("#EasypaisaNumber").val(""); // clear if hidden
+                }
+            }
+            toggleEasypaisa();
+            $("#PaymentMethod").change(toggleEasypaisa);
+        });
+    </script>
 </body>
 </html>

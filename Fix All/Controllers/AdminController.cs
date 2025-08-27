@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net.Mail;
 using MailKit.Net.Smtp;
 using MimeKit;
+using YourProject.Models;
 
 
 namespace Fix_All.Controllers
@@ -16,14 +17,68 @@ namespace Fix_All.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
         }
 
+        // POST: Admin/Login
+        [HttpPost]
+        public IActionResult Login(AdminLogin model)
+        {
+            // Check hardcoded admin credentials
+            if (model.Email == "admin@email.com" && model.Password == "adminabdullah123")
+            {
+                // ✅ Save session (Admin logged in)
+                HttpContext.Session.SetString("AdminEmail", model.Email);
+
+                // Redirect to Admin Dashboard
+                return RedirectToAction("Index");
+            }
+
+            // ❌ Invalid credentials
+            ViewBag.Error = "Invalid email or password!";
+            return View();
+        }
+        // GET: Admin/Logout
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
+        public IActionResult Index()
+
+        {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login");
+
+            return View();
+        }
+
+        public IActionResult Messages()
+        {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login");
+
+            var messages = _context.Contacts
+                .OrderByDescending(c => c.CreatedAt)
+                .ToList();
+            return View(messages);
+        }
+        public IActionResult Users()
+        {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login");
+
+            var users = _context.UserAccounts.ToList();
+            return View(users);
+        }
 
         public async Task<IActionResult> applyforlabar()
         {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login");
+
             var providers = await _context.ServiceProviders
                 .Include(s => s.LaborField)
                 .OrderByDescending(s => s.LarberId) // ✅ Newest first
@@ -32,6 +87,10 @@ namespace Fix_All.Controllers
         }     
         public async Task<IActionResult> Labers()
         {
+            var email = HttpContext.Session.GetString("AdminEmail");
+            if (string.IsNullOrEmpty(email)) return RedirectToAction("Login");
+
+
             var providers = await _context.approve_labers
                 .Include(s => s.LaborField)
                 .OrderByDescending(s => s.ApproveLarberId) // ✅ Newest first
@@ -156,10 +215,6 @@ namespace Fix_All.Controllers
                 Console.WriteLine("Email sending failed: " + ex.Message);
             }
         }
-
-
-
-
 
 
 

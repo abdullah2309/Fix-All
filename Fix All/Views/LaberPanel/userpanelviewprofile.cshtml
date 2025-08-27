@@ -1,0 +1,140 @@
+﻿@model Fix_All.Models.approve_laber
+@{
+    ViewData["Title"] = "Labor Profile";
+    Layout = "~/Views/Shared/_labar_panel.cshtml";
+}
+<style>
+    .cover {
+        position: relative;
+        width: 100%;
+        height: 300px; /* adjust height */
+        
+    }
+
+    .cover-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* makes sure the cover fills area without stretching */
+        border-radius: 12px 12px 0 0;
+        display: block;
+    }
+
+    .profile-img {
+    
+      
+        
+        width: 120px; /* adjust size */
+        height: 120px;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        /* ensures full face shows */
+        background: #fff;
+    }
+</style>
+<link href="~/Adminassets/laberprofile.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Cover + Profile Image -->
+<div class="position-relative">
+    <img src="@(Model.CoverImagePath ?? "/images/default-cover.jpg")"
+         class="w-100 rounded-top" style="height: 250px; object-fit: cover;" />
+
+    <!-- Profile Image -->
+    <img src="@(Model.ProfileImagePath ?? "/images/default-profile.png")"
+         class="rounded-circle border border-3 border-white position-absolute"
+         style="width: 120px; height: 120px; top: 180px; left: 30px;" />
+</div>
+<!-- Profile Container -->
+<div class="container">
+    <div class="profile-header">
+        <div class="profile-actions">
+            <a asp-action="EditProfile" asp-route-id="@Model.ApproveLarberId" class="action-btn secondary-btn">
+                <i class="fas fa-pencil-alt"></i> Edit profile
+            </a>
+        </div>
+       
+        <!-- Name + Headline -->
+        <h2>@Model.FirstName @Model.LastName</h2>
+        <p class="headline">@Model.Headline</p>
+
+        <!-- Location -->
+        <div class="location">
+            <i class="fas fa-map-marker-alt"></i> @Model.Address
+        </div>
+
+        <!-- Contact -->
+        <div class="contact mt-2">
+            <p><i class="fas fa-envelope"></i> @Model.Email</p>
+            <p><i class="fas fa-phone"></i> @Model.Phone</p>
+            <p><i class="fas fa-id-card"></i> @Model.CNIC</p>
+        </div>
+
+        <!-- Links -->
+        <div class="links mt-3">
+            @if (!string.IsNullOrEmpty(Model.LinkedInUrl))
+            {
+                <a href="@Model.LinkedInUrl" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.FacebookUrl))
+            {
+                <a href="@Model.FacebookUrl" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+            }
+            @if (!string.IsNullOrEmpty(Model.PortfolioUrl))
+            {
+                <a href="@Model.PortfolioUrl" target="_blank"><i class="fas fa-briefcase"></i> Portfolio</a>
+            }
+        </div>
+    </div>
+
+    <!-- About -->
+    @if (!string.IsNullOrEmpty(Model.About))
+    {
+        <div class="section">
+            <h3 class="section-title">About</h3>
+            <p>@Model.About</p>
+        </div>
+    }
+
+    <!-- Skills -->
+    @if (!string.IsNullOrEmpty(Model.Skills))
+    {
+        <div class="section">
+            <h3 class="section-title">Skills</h3>
+            <div class="skills">
+                @foreach (var skill in Model.Skills.Split(','))
+                {
+                    <span class="skill">@skill.Trim()</span>
+                }
+            </div>
+        </div>
+    }
+
+    <!-- Experience -->
+    @if (!string.IsNullOrEmpty(Model.Experience))
+    {
+        <div class="section">
+            <h3 class="section-title">Experience</h3>
+            <div class="experience-item">
+                <div class="exp-title">@Model.Experience</div>
+                <div class="exp-company">@Model.LaborField?.FieldName</div>
+            </div>
+        </div>
+    }
+
+    <!-- Education -->
+    @if (!string.IsNullOrEmpty(Model.Education))
+    {
+        <div class="section">
+            <h3 class="section-title">Education</h3>
+            <div class="education-item">
+                <div class="edu-degree">@Model.Education</div>
+            </div>
+        </div>
+    }
+
+ 
+</div>
+
+<div class="footer">
+    Fix all Laber Profile Page © @DateTime.Now.Year
+</div>

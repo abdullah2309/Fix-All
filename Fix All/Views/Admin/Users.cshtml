@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Fix_All.Models.UserAccount>
+
+@{
+    Layout = "~/Views/Shared/_Admin_layout.cshtml";
+    ViewData["Title"] = "Registered Users";
+}
+
+<div class="card shadow-sm p-3">
+    <h2 class="mb-3">Registered Users</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">No users found.</div>
+    }
+    else
+    {
+        <!-- Top Scrollbar -->
+        <div id="top-scroll" style="overflow-x:auto; height:16px;">
+            <div style="height:1px;"></div>
+        </div>
+
+        <!-- Main Scroll Wrapper -->
+        <div id="main-scroll" style="overflow-x:auto; max-height:500px;">
+            <table class="table table-hover table-bordered text-dark">
+                <thead class="table-dark sticky-header">
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Address</th>
+                        <th>Contact Number</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.FullName</td>
+                            <td>@item.Email</td>
+                            <td>@item.Password</td>
+                            <td>@item.Address</td>
+                            <td>@item.ContactNumber</td>
+                            <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<style>
+    /* Table formatting */
+    .table td, .table th {
+        color: black !important;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    /* Wrap long text (like Address) */
+    .table td:nth-child(5) {
+        white-space: normal !important;
+    }
+
+    /* Sticky header */
+    .sticky-header th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #212529;
+        color: #fff !important;
+    }
+</style>
