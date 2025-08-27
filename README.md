@@ -34,7 +34,7 @@ The system provides **three main panels**:
 ## 📸 Screenshots  
 
 ### 🔹 User Panel  
-![User Panel]([user%20panel.png](https://github.com/abdullah2309/Fix-All/blob/master/Fix%20All/wwwroot/fix%20all%20readme%20images/user%20panel.png))  
+![User Panel]([Fix All/wwwroot/fix all readme images/user panel.png))  
 
 ### 🔹 Admin Panel  
 ![Admin Panel](admin%20panel.PNG)  
