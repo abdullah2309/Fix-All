@@ -23,7 +23,7 @@ The system provides **three main panels**:
 - Manage personal profile & work details.  
 - View bookings assigned.  
 
-### 🔹 Admin Panel  
+### 🔹 Admin Panel   
 - Dashboard with analytics & charts.  
 - Manage labors and customers.  
 - Monitor new orders and track service status.  
