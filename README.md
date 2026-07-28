@@ -1,6 +1,6 @@
 
-# 🛠️ Fix All — Service Management System  
- 
+# 🛠️ Fix All — Service Management System
+
 Fix All is a web-based platform that connects **customers** with **skilled labors** for household repairs and services.  
 The system provides **three main panels**:  
 
@@ -8,11 +8,11 @@ The system provides **three main panels**:
 2. **Labor Panel** – register, manage jobs, and track bookings.  
 3. **User Panel** – book services, view available labors, and manage requests.  
 
---- 
+---
  
 ## 🚀 Features  
 
-### 🔹 User Panel  
+### 🔹 User Panel   
 - Browse and book labors.   
 - View available services with details & experience.  
 - Fast booking system with real-time updates.  
@@ -23,7 +23,7 @@ The system provides **three main panels**:
 - Manage personal profile & work details.  
 - View bookings assigned.  
 
-### 🔹 Admin Panel  
+### 🔹 Admin Panel   
 - Dashboard with analytics & charts.  
 - Manage labors and customers.  
 - Monitor new orders and track service status.  
