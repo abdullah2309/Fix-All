@@ -8,7 +8,7 @@ The system provides **three main panels**:
 2. **Labor Panel** – register, manage jobs, and track bookings.  
 3. **User Panel** – book services, view available labors, and manage requests.  
 
----
+--- 
 
 ## 🚀 Features  
 
