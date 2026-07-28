@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Fix_All.Models.BookNow>
+
+@{
+    Layout = "~/Views/Shared/_Admin_layout.cshtml";
+    ViewData["Title"] = "Manage Bookings";
+}
+
+<div class="card shadow-sm p-3">
+    <h2 class="mb-3">Manage Bookings</h2>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">@TempData["Message"]</div>
+    }
+
+    <!-- Main Scroll Wrapper -->
+    <div style="overflow-x:auto; max-height:500px;">
+        <table class="table table-hover table-bordered text-dark">
+            <thead class="table-dark sticky-header">
+                <tr>
+                    <th>Booking ID</th>
+                    <th>User</th>
+                    <th>Labor</th>
+                    <th>Field</th>
+                    <th>Address</th>
+                    <th>Date</th>
+                    <th>Notes</th>
+                    <th>Status</th>
+                    <th style="width:200px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.BookingId</td>
+                        <td>@item.UserAccount?.FullName</td>
+                        <td>@item.ApproveLaber?.FirstName @item.ApproveLaber?.LastName</td>
+                        <td>@item.LaborField?.FieldName</td>
+                        <td>@item.ServiceAddress</td>
+                        <td>@item.ServiceDate.ToShortDateString()</td>
+                        <td>@item.Notes</td>
+                        <td>
+                            @if (item.Status == "Pending")
+                            {
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            }
+                            else if (item.Status == "Approved")
+                            {
+                                <span class="badge bg-success">Approved</span>
+                            }
+                            else if (item.Status == "Rejected")
+                            {
+                                <span class="badge bg-danger">Rejected</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.Status == "Pending")
+                            {
+                                <form asp-action="Approve" asp-route-id="@item.BookingId" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                </form>
+
+                                <!-- Reject Button (opens modal) -->
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rejectModal-@item.BookingId">
+                                    Reject
+                                </button>
+
+                                <!-- Bootstrap Modal for Reject -->
+                                <div class="modal fade" id="rejectModal-@item.BookingId" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Confirm Reject</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to <b>Reject</b> this booking (ID: @item.BookingId)?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <form asp-action="Reject" asp-route-id="@item.BookingId" method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-danger">Yes, Reject</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-muted">No Actions</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    /* Sticky header */
+    .sticky-header th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #212529;
+        color: #fff !important;
+    }
+</style>

@@ -1,7 +1,6 @@
 ﻿@{
-    Layout = null; // agar aap _Layout.cshtml use karna chahte ho to is line ko hata  dff
+    Layout = null;
 }
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,16 +28,23 @@
             max-width: 500px;
         }
 
-        .success-container h1 {
-            color: #28a745;
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
+            .success-container h1 {
+                color: #28a745;
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
 
-        .success-container p {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 25px;
+            .success-container p {
+                font-size: 16px;
+                color: #333;
+                margin-bottom: 25px;
+            }
+
+        .countdown {
+            font-size: 18px;
+            color: #dc3545;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
 
         .btn-home {
@@ -52,9 +58,9 @@
             transition: background-color 0.3s ease;
         }
 
-        .btn-home:hover {
-            background-color: #0056b3;
-        }
+            .btn-home:hover {
+                background-color: #0056b3;
+            }
     </style>
 </head>
 <body>
@@ -62,7 +68,34 @@
         <h1>🎉 Congratulations!</h1>
         <p>Your labor application has been successfully submitted.</p>
         <p>Our team will contact you via <b>email or phone call</b> if you are selected.</p>
+
+        <!-- Countdown -->
+        <div class="countdown" id="countdown"></div>
+
         <a asp-action="Index" class="btn-home">Back to Home</a>
     </div>
+
+    <script>
+        // Set 24 hours from now
+        let countDownDate = new Date().getTime() + (24 * 60 * 60 * 1000);
+
+        let x = setInterval(function () {
+            let now = new Date().getTime();
+            let distance = countDownDate - now;
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "⏰ Time Expired!";
+                return;
+            }
+
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML =
+                "⏳ Time left: " + hours + "h " + minutes + "m " + seconds + "s ";
+        }, 1000);
+    </script>
 </body>
 </html>

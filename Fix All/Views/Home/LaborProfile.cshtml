@@ -1,0 +1,213 @@
+﻿@model Fix_All.Models.approve_laber
+@{
+    ViewData["Title"] = "Labor Profile";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labor Profile</title>
+    <link href="~/Adminassets/laberprofile.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <style>
+        /* ===== Cover Image ===== */
+        .cover-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+        }
+
+            .cover-container img.cover-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+        /* ===== Profile Image ===== */
+        .profile-img {
+            position: absolute;
+            bottom: 0px; /* ✅ shows full circle below the cover */
+            left: 30px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            background: #fff;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* ===== Profile Header Text ===== */
+        .profile-header {
+            margin-top: 80px; /* space for profile image */
+            padding-left: 170px; /* content shifts right of profile img */
+            position: relative;
+        }
+
+            .profile-header h2 {
+                margin: 0;
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            .profile-header .headline {
+                font-size: 14px;
+                color: #555;
+            }
+
+            .profile-header .location,
+            .profile-header .contact {
+                margin-top: 10px;
+                color: #666;
+                font-size: 14px;
+            }
+
+            .profile-header .links a {
+                margin-right: 15px;
+                color: #0077b5;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+                .profile-header .links a:hover {
+                    text-decoration: underline;
+                }
+
+        /* ===== Buttons ===== */
+        .profile-actions {
+            position: absolute;
+            top: -40px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #fff;
+            background: #0077b5;
+        }
+
+        .secondary-btn {
+            background: #6c757d;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+
+    <!-- Cover + Profile Image -->
+    <div class="cover-container">
+        <img src="@(Model.CoverImagePath ?? "/images/default-cover.jpg")" class="cover-img" alt="Cover Image" />
+        <img src="@(Model.ProfileImagePath ?? "/images/default-profile.png")" class="profile-img" alt="Profile Image" />
+    </div>
+
+    <!-- Profile Container -->
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-actions">
+                <!-- Back to Home Button -->
+                <a asp-action="Index" asp-controller="Home" class="action-btn">
+                    <i class="fas fa-home"></i> Home
+                </a>
+
+                
+
+                <a asp-controller="BookNow" asp-action="Create" asp-route-laborId="@Model.ApproveLarberId" class="action-btn secondary-btn">
+                    <i class="fas fa-calendar-check"></i> Book Now
+                </a>
+            </div>
+
+
+            <!-- Name + Headline -->
+            <h2>@Model.FirstName @Model.LastName</h2>
+            <p class="headline">@Model.Headline</p>
+
+            <!-- Location -->
+            <div class="location">
+                <i class="fas fa-map-marker-alt"></i> @Model.Address
+            </div>
+
+            <!-- Contact -->
+            <div class="contact mt-2">
+                <p><i class="fas fa-envelope"></i> @Model.Email</p>
+                <p><i class="fas fa-phone"></i> @Model.Phone</p>
+                <p><i class="fas fa-id-card"></i> @Model.CNIC</p>
+            </div>
+
+            <!-- Links -->
+            <div class="links mt-3">
+                @if (!string.IsNullOrEmpty(Model.LinkedInUrl))
+                {
+                    <a href="@Model.LinkedInUrl" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                }
+                @if (!string.IsNullOrEmpty(Model.FacebookUrl))
+                {
+                    <a href="@Model.FacebookUrl" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                }
+                @if (!string.IsNullOrEmpty(Model.PortfolioUrl))
+                {
+                    <a href="@Model.PortfolioUrl" target="_blank"><i class="fas fa-briefcase"></i> Portfolio</a>
+                }
+            </div>
+        </div>
+
+        <!-- About -->
+        @if (!string.IsNullOrEmpty(Model.About))
+        {
+            <div class="section">
+                <h3 class="section-title">About</h3>
+                <p>@Model.About</p>
+            </div>
+        }
+
+        <!-- Skills -->
+        @if (!string.IsNullOrEmpty(Model.Skills))
+        {
+            <div class="section">
+                <h3 class="section-title">Skills</h3>
+                <div class="skills">
+                    @foreach (var skill in Model.Skills.Split(','))
+                    {
+                        <span class="skill">@skill.Trim()</span>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Experience -->
+        @if (!string.IsNullOrEmpty(Model.Experience))
+        {
+            <div class="section">
+                <h3 class="section-title">Experience</h3>
+                <div class="experience-item">
+                    <div class="exp-title">@Model.Experience</div>
+                    <div class="exp-company">@Model.LaborField?.FieldName</div>
+                </div>
+            </div>
+        }
+
+        <!-- Education -->
+        @if (!string.IsNullOrEmpty(Model.Education))
+        {
+            <div class="section">
+                <h3 class="section-title">Education</h3>
+                <div class="education-item">
+                    <div class="edu-degree">@Model.Education</div>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>

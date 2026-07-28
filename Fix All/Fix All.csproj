@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.13.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.18">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="wwwroot\Adminassets\newcss\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
@@ -35,6 +37,7 @@
     <Folder Include="wwwroot\lib\jquery\dist\" />
     <Folder Include="wwwroot\uploads\images\" />
     <Folder Include="wwwroot\uploads\cv\" />
+    <Folder Include="wwwroot\uploads\cover\" />
     <Folder Include="wwwroot\uploads\profile\" />
   </ItemGroup>
 
