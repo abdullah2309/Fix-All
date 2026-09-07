@@ -93,5 +93,4 @@ The system provides **three main panels**:
 
 ## 👨‍💻 Author  
 **Abdullah**  
- [Abdullah2309a@aptechorangi.com ]  
 🌐 [https://abdullah2309a.netlify.app/]  
