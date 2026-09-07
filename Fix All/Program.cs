@@ -10,7 +10,6 @@ builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();   // ? Add this line
 builder.Services.AddSession();               // already added for session
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
