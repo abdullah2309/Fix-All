@@ -15,7 +15,7 @@ namespace Fix_All.Migrations
     [Migration("20250818052759_addmorefield")]
     partial class addmorefield
     {
-        /// <inheritdoc />
+        /////// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
