@@ -7,7 +7,6 @@
 
 <div class="card shadow-sm p-3">
     <h2 class="mb-3">Labor Fields</h2>
-
     <p>
         <a asp-action="Create" class="btn btn-primary">+ Add New Field</a>
     </p>
@@ -23,7 +22,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr> 
                     <td class="text-dark">@item.FieldId</td>
                     <td class="text-dark">@item.FieldName</td>
                     <td>
@@ -35,7 +34,6 @@
                                 Delete
                             </button>
                         </form>
-
                     </td>
                 </tr>
             }
